@@ -1,6 +1,15 @@
-import { services, plans, steps, stats, testimonials, nav } from '@/data/site';
+import { services, plans, steps, stats, testimonials } from '@/data/site';
 
 const serif = { fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif' };
+
+const editorialNav = [
+  { label: 'About', href: '#about' },
+  { label: 'Services', href: '#services' },
+  { label: 'How It Works', href: '#how' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'UGC', href: '#ugc' },
+  { label: 'Testimonials', href: '#testimonials' },
+];
 
 export function EditorialTemplate() {
   return (
@@ -12,7 +21,7 @@ export function EditorialTemplate() {
             <span className="text-[10px] uppercase tracking-[0.3em] text-black/50">Est. 2018 · Issue 07</span>
           </div>
           <nav className="hidden gap-7 md:flex">
-            {nav.map((n) => (
+            {editorialNav.map((n) => (
               <a key={n.href} href={n.href} className="text-xs uppercase tracking-[0.25em] text-black/70 hover:text-black">
                 {n.label}
               </a>
@@ -48,6 +57,66 @@ export function EditorialTemplate() {
             <div className="aspect-[3/4] w-full" style={{ background: 'linear-gradient(180deg,#c9b89a 0%,#8a7a5e 100%)' }} />
             <p className="mt-3 text-xs italic text-black/60">Pl. 01 — On Sourdough, Folio Bakery, Spring '25.</p>
           </aside>
+        </div>
+      </section>
+
+      <section id="about" className="border-b border-black/10" style={{ background: '#ece6d6' }}>
+        <div className="mx-auto grid max-w-7xl grid-cols-12 gap-8 px-6 py-20 md:px-10 md:py-28">
+          <aside className="col-span-12 md:col-span-5">
+            <div
+              className="aspect-[4/5] w-full"
+              style={{
+                background:
+                  'linear-gradient(160deg,#d8c8a8 0%,#a89171 55%,#5a4a36 100%)',
+                boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)',
+              }}
+            />
+            <p className="mt-3 text-xs italic text-black/60">Pl. 02 — Anna Wilson, on location, Brooklyn '25.</p>
+          </aside>
+          <div className="col-span-12 md:col-span-7">
+            <p className="text-xs uppercase tracking-[0.4em] text-black/60">A note from the founder</p>
+            <h2 style={serif} className="mt-4 text-5xl leading-[1] tracking-tight md:text-7xl">
+              About<br />
+              <em className="italic font-light">Anna Wilson.</em>
+            </h2>
+            <div style={serif} className="mt-8 space-y-5 text-lg leading-relaxed text-black/80 md:text-xl">
+              <p>
+                <span className="text-3xl float-left mr-2 leading-none">I</span>
+                started this studio after a decade of making films inside agencies that
+                kept asking for louder, faster, glossier. I wanted the opposite —
+                quieter work, made with patience, that still moved the needle.
+              </p>
+              <p>
+                Today I work with a small bench of trusted creators and editors,
+                directing every project from first call to final frame. Sourdough
+                bakeries, indie roasters, skincare founders, denim shops — the
+                brands I love are the ones built by hand.
+              </p>
+              <p>
+                If you are a small business with a story worth telling slowly,
+                I would like to hear from you.
+              </p>
+            </div>
+
+            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-black/15 pt-8 md:grid-cols-3">
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.3em] text-black/55">Based in</dt>
+                <dd style={serif} className="mt-1 text-xl">Brooklyn, NY</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.3em] text-black/55">Working since</dt>
+                <dd style={serif} className="mt-1 text-xl">2014</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.3em] text-black/55">Featured in</dt>
+                <dd style={serif} className="mt-1 text-xl italic">It's Nice That · Kinfolk</dd>
+              </div>
+            </dl>
+
+            <p style={serif} className="mt-10 text-2xl italic text-black/70 md:text-3xl">
+              — Anna Wilson, Founder &amp; Director
+            </p>
+          </div>
         </div>
       </section>
 

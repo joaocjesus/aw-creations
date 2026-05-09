@@ -1,11 +1,3 @@
-export const nav = [
-  { label: 'Services', href: '#services' },
-  { label: 'How It Works', href: '#how' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'UGC', href: '#ugc' },
-  { label: 'Testimonials', href: '#testimonials' },
-];
-
 export const services = [
   {
     n: '01',
@@ -80,13 +72,6 @@ export const plans = [
   },
 ];
 
-export const ugc = [
-  { handle: '@laurenbakes', caption: 'Cottage bakery — small batch sourdough launch' },
-  { handle: '@northrowcoffee', caption: 'Indie roaster — espresso lineup teaser' },
-  { handle: '@studio.fern', caption: 'Skincare brand — gentle cleanser routine' },
-  { handle: '@willstack', caption: 'DTC apparel — denim drop preview' },
-];
-
 export const testimonials = [
   {
     quote: 'Bookings up 60% in two months.',
@@ -107,21 +92,3 @@ export const testimonials = [
     business: 'Founder, Studio Fern',
   },
 ];
-
-export const tickerWords = [
-  'UGC Content',
-  'Short-Form Edits',
-  'Brand Films',
-  'Paid Ad Creative',
-  'Content Strategy',
-  'On-Site Production',
-  'Hook Engineering',
-  'Creator Network',
-];
-
-export const heroThumbs = Array.from({ length: 24 }, (_, i) => {
-  const hues = [28, 36, 44, 16, 24, 32];
-  const h = hues[i % hues.length];
-  const l = 14 + ((i * 7) % 18);
-  return `hsl(${h} 18% ${l}%)`;
-});
