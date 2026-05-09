@@ -25,7 +25,7 @@ export function Nav() {
       <div className="container-x flex h-16 items-center justify-between md:h-20">
         <a href="#top" className="group flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-full bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold">A</span>
-          <span className="text-sm font-medium tracking-[0.2em] uppercase text-[var(--color-fg)]">Anna Studio</span>
+          <span className="text-sm font-medium tracking-[0.2em] uppercase text-[var(--color-fg)]">Anna Wilson Studio</span>
         </a>
 
         <nav className="hidden md:flex items-center gap-9">

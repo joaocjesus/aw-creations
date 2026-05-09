@@ -1,35 +1,19 @@
-import { Cursor } from '@/components/Cursor';
-import { Nav } from '@/components/Nav';
-import { Hero } from '@/sections/Hero';
-import { Ticker } from '@/sections/Ticker';
-import { Services } from '@/sections/Services';
-import { Stats } from '@/sections/Stats';
-import { HowItWorks } from '@/sections/HowItWorks';
-import { Pricing } from '@/sections/Pricing';
-import { UGC } from '@/sections/UGC';
-import { Testimonials } from '@/sections/Testimonials';
-import { CTA } from '@/sections/CTA';
-import { Footer } from '@/sections/Footer';
-import { useReveal } from '@/hooks/useReveal';
+import { useEffect } from 'react';
+import { templates } from '@/templates/registry';
+import { TemplateSwitcher, useTemplateRouter } from '@/components/TemplateSwitcher';
 
 export default function App() {
-  useReveal();
+  const { id, select } = useTemplateRouter();
+  const Active = (templates.find((t) => t.id === id) ?? templates[0]).Component;
+
+  useEffect(() => {
+    document.documentElement.dataset.template = id;
+  }, [id]);
+
   return (
     <>
-      <Cursor />
-      <Nav />
-      <main>
-        <Hero />
-        <Ticker />
-        <Services />
-        <Stats />
-        <HowItWorks />
-        <Pricing />
-        <UGC />
-        <Testimonials />
-        <CTA />
-      </main>
-      <Footer />
+      <Active key={id} />
+      <TemplateSwitcher id={id} onSelect={select} />
     </>
   );
 }

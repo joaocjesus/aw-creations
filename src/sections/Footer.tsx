@@ -19,7 +19,7 @@ export function Footer() {
         <div className="col-span-2 md:col-span-1">
           <a href="#top" className="flex items-center gap-2">
             <span className="grid h-8 w-8 place-items-center rounded-full bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold">A</span>
-            <span className="text-sm font-medium tracking-[0.2em] uppercase text-[var(--color-fg)]">Anna Studio</span>
+            <span className="text-sm font-medium tracking-[0.2em] uppercase text-[var(--color-fg)]">Anna Wilson Studio</span>
           </a>
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-[var(--color-fg)]/55">
             Video marketing studio helping small businesses look unforgettable on every feed.
@@ -73,7 +73,7 @@ export function Footer() {
 
       <div className="border-t border-[var(--color-border)]">
         <div className="container-x flex flex-col items-start justify-between gap-3 py-6 text-xs text-[var(--color-muted)] md:flex-row md:items-center">
-          <span>© {year} Anna Studio. All rights reserved.</span>
+          <span>© {year} Anna Wilson Studio. All rights reserved.</span>
           <div className="flex gap-6">
             <a href="#" className="hover:text-[var(--color-accent)]">Privacy</a>
             <a href="#" className="hover:text-[var(--color-accent)]">Terms</a>
