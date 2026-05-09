@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #0e0e0e;
+  --color-card: #181818;
+  --color-secondary: #161616;
+  --color-fg: #f0ede8;
+  --color-muted: #6b6b6b;
+  --color-accent: #c8b89a;
+  --color-accent-soft: #e8e0d4;
+  --color-highlight: #ffffff;
+  --color-border: #2a2a2a;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --animate-ticker: ticker 30s linear infinite;
+  --animate-scroll-down: scroll-down 40s linear infinite;
+  --animate-scroll-up: scroll-up 40s linear infinite;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-down {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes scroll-up {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    margin: 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    body.has-custom-cursor {
+      cursor: none;
+    }
+    body.has-custom-cursor a,
+    body.has-custom-cursor button,
+    body.has-custom-cursor input,
+    body.has-custom-cursor textarea,
+    body.has-custom-cursor select,
+    body.has-custom-cursor [role='button'] {
+      cursor: none;
+    }
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
+}
+
+@layer components {
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-6 md:px-10;
+  }
+}
