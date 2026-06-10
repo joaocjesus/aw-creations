@@ -31,7 +31,7 @@ export function EditorialTemplate() {
 
   return (
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <header className="relative border-b border-black/10 dark:border-white/10">
+      <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
           <div className="flex items-baseline gap-3">
             <span className="font-display display-safe text-2xl font-semibold tracking-tight">Anna Wilson Studio</span>
