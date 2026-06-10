@@ -3,18 +3,23 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: 'Syne Safe';
+  font-family: 'Fraunces';
   font-style: normal;
-  font-weight: 400 800;
+  font-weight: 100 900;
   font-display: swap;
-  ascent-override: 92%;
-  descent-override: 36%;
-  line-gap-override: 8%;
-  src: url('/fonts/syne-variable.woff2') format('woff2');
+  src: url('/fonts/fraunces-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/fraunces-italic-variable.woff2') format('woff2');
 }
 
 @theme {
-  --font-display: 'Syne Safe', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
 }
 
 @layer base {

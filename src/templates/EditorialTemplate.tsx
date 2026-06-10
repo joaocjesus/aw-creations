@@ -351,7 +351,7 @@ export function EditorialTemplate() {
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-6 text-xs uppercase tracking-[0.25em] text-black/55 dark:text-white/55 md:flex-row md:items-center md:px-10">
           <span className="font-display display-safe text-base normal-case font-semibold tracking-normal text-black dark:text-white">Anna Wilson Studio — Folio of moving pictures.</span>
-          <span>© {new Date().getFullYear()} · Set in Syne &amp; Newsreader.</span>
+          <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>
     </div>
