@@ -9,7 +9,7 @@ const themeOptions = [
 ] as const;
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <div
@@ -25,11 +25,11 @@ export function ThemeToggle() {
           size="icon"
           className={cn(
             'h-9 w-9 rounded-none tracking-normal',
-            theme === value && 'bg-[var(--foreground)] text-[var(--background)] hover:text-[var(--background)]',
+            resolvedTheme === value && 'bg-[var(--foreground)] text-[var(--background)] hover:text-[var(--background)]',
           )}
           onClick={() => setTheme(value)}
           aria-label={label}
-          aria-pressed={theme === value}
+          aria-pressed={resolvedTheme === value}
           title={label}
         >
           <Icon size={15} aria-hidden="true" />

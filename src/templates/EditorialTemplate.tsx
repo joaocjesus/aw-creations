@@ -10,27 +10,31 @@ import {
 } from '@/components/ui/dialog';
 import { services, plans, steps, stats, testimonials } from '@/data/site';
 
-const display = { fontFamily: '"Syne Safe", ui-sans-serif, system-ui, sans-serif' };
-const sans = { fontFamily: '"Syne Safe", ui-sans-serif, system-ui, sans-serif' };
-
 const editorialNav = [
   { label: 'About', href: '#about' },
   { label: 'Services', href: '#services' },
   { label: 'How It Works', href: '#how' },
   { label: 'Pricing', href: '#pricing' },
-  { label: 'UGC', href: '#ugc' },
 ];
 
 export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [enquirySent, setEnquirySent] = useState(false);
+
+  const handleModalOpenChange = (open: boolean) => {
+    setModalOpen(open);
+    if (!open) {
+      setEnquirySent(false);
+    }
+  };
 
   return (
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="relative border-b border-black/10 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
           <div className="flex items-baseline gap-3">
-            <span style={sans} className="display-safe text-2xl font-semibold tracking-tight">Anna Wilson Studio</span>
+            <span className="font-display display-safe text-2xl font-semibold tracking-tight">Anna Wilson Studio</span>
           </div>
           <nav className="hidden gap-7 md:flex">
             {editorialNav.map((n) => (
@@ -53,6 +57,7 @@ export function EditorialTemplate() {
               onClick={() => setMenuOpen((o) => !o)}
               className="flex flex-col gap-[5px] md:hidden"
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
               <span className={`block h-px w-6 bg-black dark:bg-white transition-transform duration-200 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
               <span className={`block h-px w-6 bg-black dark:bg-white transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
@@ -88,7 +93,7 @@ export function EditorialTemplate() {
       <section className="border-b border-black/10 dark:border-white/10">
         <div className="mx-auto grid max-w-7xl grid-cols-12 gap-6 px-6 py-16 md:px-10 md:py-28">
           <div className="col-span-12 md:col-span-7">
-            <h1 style={display} className="display-safe text-5xl font-semibold md:text-8xl">
+            <h1 className="font-display display-safe text-5xl font-semibold md:text-8xl">
               Films that<br />
               <em className="font-normal not-italic">linger.</em>
             </h1>
@@ -99,13 +104,20 @@ export function EditorialTemplate() {
               <a href="#contact" className="bg-[var(--foreground)] px-7 py-3 text-xs uppercase tracking-[0.3em] text-[var(--background)] hover:bg-[color:var(--foreground-soft)]">
                 Begin a project
               </a>
-              <a href="#work" className="border-b border-black pb-1 text-xs uppercase tracking-[0.3em] dark:border-white">
-                Browse the archive
+              <a href="#services" className="border-b border-black pb-1 text-xs uppercase tracking-[0.3em] dark:border-white">
+                Browse the disciplines
               </a>
             </div>
           </div>
           <aside className="col-span-12 md:col-span-5 md:border-l md:border-black/15 md:pl-8 dark:md:border-white/15">
-            <div className="aspect-[3/4] w-full" style={{ background: 'linear-gradient(180deg,#c9b89a 0%,#8a7a5e 100%)' }} />
+            <img
+              src="/media/portrait-bokah-flowers.jpg"
+              alt="Anna Wilson, portrait among flowers"
+              width={1066}
+              height={1600}
+              fetchPriority="high"
+              className="aspect-[3/4] w-full object-cover"
+            />
           </aside>
         </div>
       </section>
@@ -114,13 +126,16 @@ export function EditorialTemplate() {
         <div className="mx-auto grid max-w-7xl grid-cols-12 gap-8 px-6 py-20 md:px-10 md:py-28">
           <aside className="col-span-12 md:col-span-5">
             <img
-              src="/media/using-laptop.JPG"
+              src="/media/using-laptop.jpg"
               alt="Anna Wilson working on a laptop"
+              width={1066}
+              height={1600}
+              loading="lazy"
               className="aspect-[4/5] w-full object-cover"
             />
           </aside>
           <div className="col-span-12 md:col-span-7">
-            <h2 style={display} className="display-safe mt-4 text-5xl font-semibold md:text-7xl">
+            <h2 className="font-display display-safe mt-4 text-5xl font-semibold md:text-7xl">
               About<br />
               <em className="italic font-normal">Anna Wilson.</em>
             </h2>
@@ -150,10 +165,10 @@ export function EditorialTemplate() {
         </div>
       </section>
 
-      <section className="border-b border-black/10 dark:border-white/10">
+      <section id="services" className="border-b border-black/10 dark:border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
           <div className="grid grid-cols-12 gap-6">
-            <h2 style={display} className="display-safe col-span-12 text-4xl font-semibold md:col-span-4 md:text-5xl">The Disciplines</h2>
+            <h2 className="font-display display-safe col-span-12 text-4xl font-semibold md:col-span-4 md:text-5xl">The Disciplines</h2>
             <p className="col-span-12 text-sm leading-relaxed text-black/65 dark:text-white/65 md:col-span-7 md:col-start-6">
               Six practices, each tuned for a different cadence of attention. Choose one or commission the suite.
             </p>
@@ -165,7 +180,7 @@ export function EditorialTemplate() {
                   <span className="text-xs uppercase tracking-[0.3em] text-black/50 dark:text-white/50">{s.n}</span>
                   <span className="text-xs italic text-black/40 dark:text-white/40">— per the brief</span>
                 </div>
-                <h3 style={display} className="display-safe mt-3 text-2xl font-semibold">{s.title}</h3>
+                <h3 className="font-display display-safe mt-3 text-2xl font-semibold">{s.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-black/65 dark:text-white/65">{s.desc}</p>
               </article>
             ))}
@@ -176,11 +191,11 @@ export function EditorialTemplate() {
       <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
           <p className="text-xs uppercase tracking-[0.4em] text-black/60 dark:text-white/60">From the masthead</p>
-          <h2 style={display} className="display-safe mt-3 text-4xl font-semibold md:text-6xl">By the numbers.</h2>
+          <h2 className="font-display display-safe mt-3 text-4xl font-semibold md:text-6xl">By the numbers.</h2>
           <div className="mt-10 grid grid-cols-2 gap-y-10 md:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label} className="border-l border-black/20 pl-5 dark:border-white/20">
-                <div style={display} className="display-safe text-5xl font-semibold md:text-6xl">{s.value}</div>
+                <div className="font-display display-safe text-5xl font-semibold md:text-6xl">{s.value}</div>
                 <div className="mt-2 text-[11px] uppercase tracking-[0.2em] text-black/55 dark:text-white/55">{s.label}</div>
               </div>
             ))}
@@ -188,9 +203,9 @@ export function EditorialTemplate() {
         </div>
       </section>
 
-      <section className="border-b border-black/10 dark:border-white/10">
+      <section id="how" className="border-b border-black/10 dark:border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <h2 style={display} className="display-safe text-4xl font-semibold md:text-6xl">A working method.</h2>
+          <h2 className="font-display display-safe text-4xl font-semibold md:text-6xl">A working method.</h2>
           <ol className="mt-12 grid grid-cols-1 gap-px overflow-hidden border border-black/15 dark:border-white/15 md:grid-cols-4">
             {steps.map((s) => (
               <li
@@ -198,7 +213,7 @@ export function EditorialTemplate() {
                 className="bg-[var(--card)] p-7 outline outline-1 -outline-offset-1 outline-[color:var(--border-subtle)]"
               >
                 <span className="text-3xl italic text-black/30 dark:text-white/30">{s.n}</span>
-                <h3 style={display} className="display-safe mt-3 text-xl font-semibold">{s.title}</h3>
+                <h3 className="font-display display-safe mt-3 text-xl font-semibold">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-black/65 dark:text-white/65">{s.desc}</p>
               </li>
             ))}
@@ -206,19 +221,19 @@ export function EditorialTemplate() {
         </div>
       </section>
 
-      <section className="border-b border-black/10 dark:border-white/10">
+      <section id="pricing" className="border-b border-black/10 dark:border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <h2 style={display} className="display-safe text-4xl font-semibold md:text-6xl">Subscriptions.</h2>
+          <h2 className="font-display display-safe text-4xl font-semibold md:text-6xl">Subscriptions.</h2>
           <div
             className="mt-12 grid grid-cols-1 gap-px bg-[color:var(--border-strong)] md:grid-cols-3"
           >
             {plans.map((p) => (
               <div key={p.name} className="bg-[var(--card)] p-8">
                 <div className="flex items-baseline justify-between">
-                  <h3 style={display} className="display-safe text-3xl font-semibold">{p.name}</h3>
+                  <h3 className="font-display display-safe text-3xl font-semibold">{p.name}</h3>
                   {p.featured && <span className="text-[10px] uppercase tracking-[0.3em] text-black/50 dark:text-white/50">Recommended</span>}
                 </div>
-                <div style={display} className="display-safe mt-4 text-5xl font-semibold">
+                <div className="font-display display-safe mt-4 text-5xl font-semibold">
                   {p.price}
                   <span className="text-base text-black/50 dark:text-white/50">{p.cadence}</span>
                 </div>
@@ -241,7 +256,7 @@ export function EditorialTemplate() {
 
       <section className="border-b border-black/10 dark:border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <h2 style={display} className="display-safe text-4xl font-semibold md:text-6xl">Letters from the field.</h2>
+          <h2 className="font-display display-safe text-4xl font-semibold md:text-6xl">Letters from the field.</h2>
           <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3">
             {testimonials.map((t) => (
               <figure key={t.name} className="border-t border-black/15 pt-6 dark:border-white/15">
@@ -259,7 +274,7 @@ export function EditorialTemplate() {
       <section id="contact" style={{ background: '#1a1814', color: '#f5f1e8' }}>
         <div className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
           <p className="text-xs uppercase tracking-[0.4em] text-[#c9b89a]">Correspondence</p>
-          <h2 style={display} className="display-safe mt-4 text-5xl font-semibold md:text-7xl">
+          <h2 className="font-display display-safe mt-4 text-5xl font-semibold md:text-7xl">
             Write to us.<br />
             <em className="italic">We write back.</em>
           </h2>
@@ -269,55 +284,73 @@ export function EditorialTemplate() {
         </div>
       </section>
 
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent>
+      <Dialog open={modalOpen} onOpenChange={handleModalOpenChange}>
+        <DialogContent aria-labelledby="book-call-title">
           <DialogHeader>
             <DialogDescription>Let's talk</DialogDescription>
-            <DialogTitle style={display} className="display-safe">Book a Call.</DialogTitle>
+            <DialogTitle id="book-call-title" className="font-display display-safe">Book a Call.</DialogTitle>
           </DialogHeader>
-          <form
-            className="mt-8 space-y-5"
-            onSubmit={(e) => { e.preventDefault(); setModalOpen(false); }}
-          >
-            <div>
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Name</label>
-              <input
-                type="text"
-                required
-                className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                placeholder="Anna Wilson"
-              />
+          {enquirySent ? (
+            <div className="mt-8 space-y-6">
+              <p className="text-lg leading-relaxed text-black/80 dark:text-white/80">
+                Thank you — we have your details and will be in touch within one working day.
+              </p>
+              <Button onClick={() => handleModalOpenChange(false)} className="w-full">
+                Close
+              </Button>
             </div>
-            <div>
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Email</label>
-              <input
-                type="email"
-                required
-                className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                placeholder="hello@yourbrand.co"
-              />
-            </div>
-            <div>
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Phone</label>
-              <input
-                type="tel"
-                className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                placeholder="+44 7700 900000"
-              />
-            </div>
-            <Button
-              type="submit"
-              className="mt-4 w-full"
+          ) : (
+            <form
+              className="mt-8 space-y-5"
+              /* TODO: wire to a real endpoint (Formspree/API) — currently only shows confirmation */
+              onSubmit={(e) => { e.preventDefault(); setEnquirySent(true); }}
             >
-              Send Enquiry
-            </Button>
-          </form>
+              <div>
+                <label htmlFor="enquiry-name" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Name</label>
+                <input
+                  id="enquiry-name"
+                  name="name"
+                  type="text"
+                  required
+                  className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
+                  placeholder="Anna Wilson"
+                />
+              </div>
+              <div>
+                <label htmlFor="enquiry-email" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Email</label>
+                <input
+                  id="enquiry-email"
+                  name="email"
+                  type="email"
+                  required
+                  className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
+                  placeholder="hello@yourbrand.co"
+                />
+              </div>
+              <div>
+                <label htmlFor="enquiry-phone" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Phone</label>
+                <input
+                  id="enquiry-phone"
+                  name="phone"
+                  type="tel"
+                  className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
+                  placeholder="+44 7700 900000"
+                />
+              </div>
+              <Button
+                type="submit"
+                className="mt-4 w-full"
+              >
+                Send Enquiry
+              </Button>
+            </form>
+          )}
         </DialogContent>
       </Dialog>
 
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-6 text-xs uppercase tracking-[0.25em] text-black/55 dark:text-white/55 md:flex-row md:items-center md:px-10">
-          <span style={sans} className="display-safe text-base normal-case font-semibold tracking-normal text-black dark:text-white">Anna Wilson Studio — Folio of moving pictures.</span>
+          <span className="font-display display-safe text-base normal-case font-semibold tracking-normal text-black dark:text-white">Anna Wilson Studio — Folio of moving pictures.</span>
           <span>© {new Date().getFullYear()} · Set in Syne &amp; Newsreader.</span>
         </div>
       </footer>

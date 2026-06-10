@@ -5,56 +5,16 @@
 @font-face {
   font-family: 'Syne Safe';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 800;
   font-display: swap;
   ascent-override: 92%;
   descent-override: 36%;
   line-gap-override: 8%;
-  src: url('https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_04uT6k.ttf') format('truetype');
+  src: url('/fonts/syne-variable.woff2') format('woff2');
 }
 
-@font-face {
-  font-family: 'Syne Safe';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  ascent-override: 92%;
-  descent-override: 36%;
-  line-gap-override: 8%;
-  src: url('https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_0KuT6k.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Syne Safe';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  ascent-override: 92%;
-  descent-override: 36%;
-  line-gap-override: 8%;
-  src: url('https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_3mvj6k.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Syne Safe';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  ascent-override: 92%;
-  descent-override: 36%;
-  line-gap-override: 8%;
-  src: url('https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_3fvj6k.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Syne Safe';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  ascent-override: 92%;
-  descent-override: 36%;
-  line-gap-override: 8%;
-  src: url('https://fonts.gstatic.com/s/syne/v24/8vIS7w4qzmVxsWxjBZRjr0FKM_24vj6k.ttf') format('truetype');
+@theme {
+  --font-display: 'Syne Safe', ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -100,8 +60,8 @@
   }
 
   ::selection {
-    background: #1a1814;
-    color: #f5f1e8;
+    background: var(--foreground);
+    color: var(--background);
   }
 }
 

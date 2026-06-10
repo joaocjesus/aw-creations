@@ -5,8 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Anna Wilson Studio — video marketing for small businesses. UGC, short-form, paid ad creative." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Anna Wilson Studio — Video marketing for small business" />
+    <meta property="og:description" content="An editorial video studio for small businesses. UGC, short-form, paid ad creative." />
+    <meta property="og:image" content="/media/portrait-bokah-flowers.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('anna-web-theme');
+          var dark =
+            theme === 'dark' ||
+            ((!theme || theme === 'system') &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="/fonts/syne-variable.woff2" as="font" type="font/woff2" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..700&display=swap" rel="stylesheet" />
     <title>Anna Wilson Studio — Video marketing for small business</title>
   </head>
