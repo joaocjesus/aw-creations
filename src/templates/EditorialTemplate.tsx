@@ -90,35 +90,40 @@ export function EditorialTemplate() {
         )}
       </header>
 
-      <section className="border-b border-black/10 dark:border-white/10">
-        <div className="mx-auto grid max-w-7xl grid-cols-12 gap-6 px-6 py-16 md:px-10 md:py-28">
-          <div className="col-span-12 md:col-span-7">
-            <h1 className="font-display display-safe text-5xl font-semibold md:text-8xl">
-              Films that<br />
-              <em className="font-normal not-italic">linger.</em>
-            </h1>
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-black/70 dark:text-white/70 md:text-lg">
-              An editorial studio for small businesses. We make video the way old magazines made stories — with care for the line, the frame, and the reader.
-            </p>
-            <div className="mt-10 flex items-center gap-6">
-              <a href="#contact" className="bg-[var(--foreground)] px-7 py-3 text-xs uppercase tracking-[0.3em] text-[var(--background)] hover:bg-[color:var(--foreground-soft)]">
-                Begin a project
-              </a>
-              <a href="#services" className="border-b border-black pb-1 text-xs uppercase tracking-[0.3em] dark:border-white">
-                Browse the disciplines
-              </a>
-            </div>
+      <section className="relative h-[calc(100svh-5rem)] min-h-[480px] overflow-hidden border-b border-black/10 dark:border-white/10">
+        <video
+          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          src="/media/hero-reel.mp4"
+          poster="/media/hero-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+        <img
+          src="/media/hero-poster.jpg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 hidden h-full w-full object-cover motion-reduce:block"
+        />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-black/10" />
+        <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-14 text-[#f5f1e8] md:px-10 md:pb-20">
+          <h1 className="font-display display-safe text-5xl font-semibold md:text-8xl">
+            Films that<br />
+            <em className="font-normal not-italic">linger.</em>
+          </h1>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-[#f5f1e8]/80 md:text-lg">
+            An editorial studio for small businesses. We make video the way old magazines made stories — with care for the line, the frame, and the reader.
+          </p>
+          <div className="mt-8 flex items-center gap-6">
+            <a href="#contact" className="bg-[#f5f1e8] px-7 py-3 text-xs uppercase tracking-[0.3em] text-[#1a1814] hover:bg-[#f5f1e8]/85">
+              Begin a project
+            </a>
+            <a href="#services" className="border-b border-[#c9b89a] pb-1 text-xs uppercase tracking-[0.3em] text-[#f5f1e8]">
+              Browse the disciplines
+            </a>
           </div>
-          <aside className="col-span-12 md:col-span-5 md:border-l md:border-black/15 md:pl-8 dark:md:border-white/15">
-            <img
-              src="/media/portrait-bokah-flowers.jpg"
-              alt="Anna Wilson, portrait among flowers"
-              width={1066}
-              height={1600}
-              fetchPriority="high"
-              className="aspect-[3/4] w-full object-cover"
-            />
-          </aside>
         </div>
       </section>
 
