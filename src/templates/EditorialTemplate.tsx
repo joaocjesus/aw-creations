@@ -34,11 +34,11 @@ export function EditorialTemplate() {
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
           <div className="flex items-baseline gap-3">
-            <span className="font-display display-safe text-2xl font-semibold tracking-tight">Anna Wilson Creations</span>
+            <span className="font-display display-safe text-3xl font-light tracking-[0.18em] [font-variant:small-caps]">Anna Wilson Creations</span>
           </div>
           <nav className="hidden gap-7 md:flex">
             {editorialNav.map((n) => (
-              <a key={n.href} href={n.href} className="text-xs uppercase tracking-[0.25em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
+              <a key={n.href} href={n.href} className="text-sm uppercase tracking-[0.25em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
                 {n.label}
               </a>
             ))}
@@ -73,7 +73,7 @@ export function EditorialTemplate() {
                   key={n.href}
                   href={n.href}
                   onClick={() => setMenuOpen(false)}
-                  className="border-b border-black/10 py-4 text-xs uppercase tracking-[0.25em] text-black/70 hover:text-black dark:border-white/10 dark:text-white/70 dark:hover:text-white"
+                  className="border-b border-black/10 py-4 text-sm uppercase tracking-[0.25em] text-black/70 hover:text-black dark:border-white/10 dark:text-white/70 dark:hover:text-white"
                 >
                   {n.label}
                 </a>
