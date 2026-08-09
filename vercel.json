@@ -3,6 +3,10 @@
     {
       "source": "/contact",
       "destination": "/"
+    },
+    {
+      "source": "/contact/",
+      "destination": "/"
     }
   ]
 }

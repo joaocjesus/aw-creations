@@ -11,7 +11,9 @@ export function ContactForm() {
 
   useEffect(
     () => () => {
-      enquiryRequestRef.current?.abort();
+      const request = enquiryRequestRef.current;
+      enquiryRequestRef.current = null;
+      request?.abort();
     },
     [],
   );
