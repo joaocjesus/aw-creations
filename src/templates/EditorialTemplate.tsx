@@ -100,7 +100,7 @@ export function EditorialTemplate() {
       if (enquiryRequestRef.current === controller) {
         const timedOut = error instanceof DOMException && error.name === 'AbortError';
         if (!timedOut) {
-            console.error('Contact form submission failed:', error);
+          console.error('Contact form submission failed:', error);
         }
         setEnquiryError(
             timedOut
