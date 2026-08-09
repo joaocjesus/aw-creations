@@ -20,14 +20,7 @@ function escapeHtml(value: string) {
     .replaceAll("'", '&#039;');
 }
 
-export default async function handler(request: Request) {
-  if (request.method !== 'POST') {
-    return new Response(null, {
-      status: 405,
-      headers: { Allow: 'POST' },
-    });
-  }
-
+export async function POST(request: Request) {
   let body: unknown;
   try {
     body = await request.json();
