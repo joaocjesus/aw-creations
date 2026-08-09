@@ -90,19 +90,32 @@
   .inset-frame-button {
     position: relative;
     isolation: isolate;
-    background: #11100e;
-    color: #f5f1e8;
+    background: #f5f1e8;
+    color: #1a1814;
   }
 
   .inset-frame-button::before {
     position: absolute;
     inset: 4px;
-    border: 1px solid rgba(245, 241, 232, 0.9);
+    border: 1px solid rgba(26, 24, 20, 0.9);
     content: '';
     pointer-events: none;
   }
 
   .inset-frame-button:hover {
+    background: #ece6d6;
+  }
+
+  .dark .inset-frame-button {
+    background: #11100e;
+    color: #f5f1e8;
+  }
+
+  .dark .inset-frame-button::before {
+    border-color: rgba(245, 241, 232, 0.9);
+  }
+
+  .dark .inset-frame-button:hover {
     background: #29251f;
   }
 }
