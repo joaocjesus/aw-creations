@@ -19,6 +19,7 @@ const editorialNav = [
 ];
 
 const primaryCta = 'Let’s talk about your business';
+const enquiryTimeoutMs = 15_000;
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
 
@@ -52,6 +53,7 @@ export function EditorialTemplate() {
 
     const controller = new AbortController();
     enquiryRequestRef.current = controller;
+    const timeout = window.setTimeout(() => controller.abort(), enquiryTimeoutMs);
     setEnquirySubmitting(true);
     setEnquiryError(null);
 
@@ -96,14 +98,20 @@ export function EditorialTemplate() {
       }
     } catch (error) {
       if (enquiryRequestRef.current === controller) {
-        console.error('Contact form submission failed:', error);
+        const timedOut = error instanceof DOMException && error.name === 'AbortError';
+        if (!timedOut) {
+          console.error('Contact form submission failed:', error);
+        }
         setEnquiryError(
-          error instanceof Error
+            timedOut
+              ? 'The enquiry took too long to send. Please try again.'
+              : error instanceof Error
             ? error.message
             : 'The enquiry could not be sent. Please try again.',
         );
       }
     } finally {
+      window.clearTimeout(timeout);
       if (enquiryRequestRef.current === controller) {
         enquiryRequestRef.current = null;
         setEnquirySubmitting(false);
