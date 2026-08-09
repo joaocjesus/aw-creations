@@ -142,19 +142,11 @@ export function EditorialTemplate() {
           </nav>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <ThemeToggle />
-            <Button
-              onClick={openEnquiry}
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex"
-            >
-              {primaryCta}
-            </Button>
             <a
               href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${bookingLinkClass} hidden min-[1100px]:inline-flex`}
+              className={`${bookingLinkClass} hidden md:inline-flex`}
             >
               Book a Call
             </a>
@@ -183,15 +175,12 @@ export function EditorialTemplate() {
                   {item.label}
                 </a>
               ))}
-              <Button onClick={openEnquiry} variant="outline" className={`mt-4 w-full ${mobilePrimaryCtaClass}`}>
-                {primaryCta}
-              </Button>
               <a
                 href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
-                className={`${bookingLinkClass} mt-3 min-h-12 w-full`}
+                className={`${bookingLinkClass} mt-4 min-h-12 w-full`}
               >
                 Book a Call
               </a>
