@@ -19,9 +19,12 @@ const editorialNav = [
 ];
 
 const primaryCta = 'Let’s talk about your business';
+const bookingUrl = 'https://cal.com/annawcreation';
 const enquiryTimeoutMs = 15_000;
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
+const bookingLinkClass =
+  'inset-frame-button inline-flex min-h-9 items-center justify-center px-4 py-2 text-center text-xs font-medium uppercase tracking-[0.25em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]';
 
 export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -147,6 +150,14 @@ export function EditorialTemplate() {
             >
               {primaryCta}
             </Button>
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${bookingLinkClass} hidden min-[1100px]:inline-flex`}
+            >
+              Book a Call
+            </a>
             <button
               onClick={() => setMenuOpen((open) => !open)}
               className="flex flex-col gap-[5px] p-2 min-[1400px]:hidden"
@@ -175,6 +186,15 @@ export function EditorialTemplate() {
               <Button onClick={openEnquiry} variant="outline" className={`mt-4 w-full ${mobilePrimaryCtaClass}`}>
                 {primaryCta}
               </Button>
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className={`${bookingLinkClass} mt-3 min-h-12 w-full`}
+              >
+                Book a Call
+              </a>
             </nav>
           </div>
         )}
