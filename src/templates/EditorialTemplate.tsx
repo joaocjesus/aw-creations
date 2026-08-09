@@ -68,6 +68,14 @@ export function EditorialTemplate() {
             </button>
           </div>
         </div>
+        <div className="px-4 pb-4 sm:px-6 md:hidden">
+          <a
+            href="/contact"
+            className={contactLinkClass('flex min-h-12 w-full')}
+          >
+            Contact Us
+          </a>
+        </div>
         {menuOpen && (
           <div className="absolute left-0 right-0 z-40 border-b border-[color:var(--border)] bg-[var(--background)] shadow-[0_8px_24px_rgba(0,0,0,0.12)] min-[1400px]:hidden">
             <nav className="mx-auto flex max-w-[100rem] flex-col px-6 py-4">
@@ -81,20 +89,13 @@ export function EditorialTemplate() {
                   {item.label}
                 </a>
               ))}
-              <a
-                href="/contact"
-                onClick={() => setMenuOpen(false)}
-                className={contactLinkClass('mt-4 min-h-12 w-full')}
-              >
-                Contact Us
-              </a>
             </nav>
           </div>
         )}
       </header>
 
       <main>
-        <section className="relative h-[calc(100svh-4.5rem)] min-h-[580px] overflow-hidden border-b border-black/10 dark:border-white/10">
+        <section className="relative h-[calc(100svh-8rem)] min-h-[580px] overflow-hidden border-b border-black/10 dark:border-white/10 md:h-[calc(100svh-4.5rem)]">
           <video
             className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
             src="/media/hero-reel.mp4"
