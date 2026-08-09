@@ -24,7 +24,7 @@ const enquiryTimeoutMs = 15_000;
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
 const bookingLinkClass =
-  'inset-frame-button inline-flex min-h-9 items-center justify-center px-4 py-2 text-center text-xs font-medium uppercase tracking-[0.25em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]';
+  'inset-frame-button inline-flex h-11 items-center justify-center px-4 text-center text-xs font-medium uppercase tracking-[0.25em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]';
 
 export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
