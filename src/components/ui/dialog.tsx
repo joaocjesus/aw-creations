@@ -157,7 +157,7 @@ function DialogContent({
           aria-modal="true"
           tabIndex={-1}
           className={cn(
-            'relative w-full max-w-md bg-[var(--background)] p-8 text-[var(--foreground)] shadow-2xl outline-none md:p-10',
+            'relative max-h-[calc(100svh-3rem)] w-full max-w-md overflow-y-auto bg-[var(--background)] p-8 text-[var(--foreground)] shadow-2xl outline-none md:p-10',
             className,
           )}
           onClick={(event) => event.stopPropagation()}
@@ -197,7 +197,7 @@ function DialogClose({
 }
 
 function DialogHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('space-y-3', className)} {...props} />;
+  return <div className={cn('space-y-3 pr-12', className)} {...props} />;
 }
 
 function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {

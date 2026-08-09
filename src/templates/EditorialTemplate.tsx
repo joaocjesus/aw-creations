@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,308 +8,414 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { services, plans, steps, stats, testimonials } from '@/data/site';
+import { experience, services } from '@/data/site';
 
 const editorialNav = [
-  { label: 'About', href: '#about' },
+  { label: 'Portfolio', href: '#portfolio' },
+  { label: 'My Story', href: '#story' },
   { label: 'Services', href: '#services' },
-  { label: 'How It Works', href: '#how' },
-  { label: 'Pricing', href: '#pricing' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Contact', href: '#contact' },
 ];
+
+const primaryCta = 'Let’s talk about your business';
+const mobilePrimaryCtaClass =
+  'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
 
 export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [enquirySent, setEnquirySent] = useState(false);
+  const [enquirySubmitting, setEnquirySubmitting] = useState(false);
+  const [enquiryError, setEnquiryError] = useState<string | null>(null);
+  const enquiryRequestRef = useRef<AbortController | null>(null);
 
   const handleModalOpenChange = (open: boolean) => {
     setModalOpen(open);
     if (!open) {
+      enquiryRequestRef.current?.abort();
+      enquiryRequestRef.current = null;
       setEnquirySent(false);
+      setEnquirySubmitting(false);
+      setEnquiryError(null);
+    }
+  };
+
+  const openEnquiry = () => {
+    setMenuOpen(false);
+    setModalOpen(true);
+  };
+
+  const handleEnquirySubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    enquiryRequestRef.current?.abort();
+
+    const controller = new AbortController();
+    enquiryRequestRef.current = controller;
+    setEnquirySubmitting(true);
+    setEnquiryError(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(formData)),
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        const responseBody = await response.text();
+        let payload: unknown;
+
+        if (responseBody) {
+          try {
+            payload = JSON.parse(responseBody);
+          } catch {
+            console.error('Contact endpoint returned a non-JSON error response.');
+          }
+        }
+
+        const message =
+          payload &&
+          typeof payload === 'object' &&
+          'error' in payload &&
+          typeof payload.error === 'string'
+            ? payload.error
+            : response.status === 404
+              ? 'Email sending is unavailable on the local preview. Please try the deployed site.'
+              : 'The enquiry could not be sent. Please try again.';
+        throw new Error(message);
+      }
+
+      if (enquiryRequestRef.current === controller) {
+        form.reset();
+        setEnquirySent(true);
+      }
+    } catch (error) {
+      if (enquiryRequestRef.current === controller) {
+        console.error('Contact form submission failed:', error);
+        setEnquiryError(
+          error instanceof Error
+            ? error.message
+            : 'The enquiry could not be sent. Please try again.',
+        );
+      }
+    } finally {
+      if (enquiryRequestRef.current === controller) {
+        enquiryRequestRef.current = null;
+        setEnquirySubmitting(false);
+      }
     }
   };
 
   return (
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-          <div className="flex items-baseline gap-3">
-            <span className="font-display display-safe text-3xl font-light tracking-[0.18em] [font-variant:small-caps]">Anna Wilson Creations</span>
-          </div>
-          <nav className="hidden gap-7 md:flex">
-            {editorialNav.map((n) => (
-              <a key={n.href} href={n.href} className="text-sm uppercase tracking-[0.25em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
-                {n.label}
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
+          <span className="text-[1.25rem] font-normal leading-none tracking-[0.12em] [font-variant:small-caps] sm:text-[1.5rem] xl:text-[1.75rem] xl:tracking-[0.18em]">
+            Anna Wilson Creations
+          </span>
+          <nav className="hidden items-center gap-5 xl:flex">
+            {editorialNav.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-xs uppercase tracking-[0.2em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white"
+              >
+                {item.label}
               </a>
             ))}
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <ThemeToggle />
             <Button
-              onClick={() => setModalOpen(true)}
+              onClick={openEnquiry}
               variant="outline"
               size="sm"
               className="hidden md:inline-flex"
             >
-              Book a Call
+              {primaryCta}
             </Button>
             <button
-              onClick={() => setMenuOpen((o) => !o)}
-              className="flex flex-col gap-[5px] md:hidden"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="flex flex-col gap-[5px] p-2 xl:hidden"
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
             >
-              <span className={`block h-px w-6 bg-black dark:bg-white transition-transform duration-200 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
-              <span className={`block h-px w-6 bg-black dark:bg-white transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`block h-px w-6 bg-black dark:bg-white transition-transform duration-200 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
+              <span className={`block h-px w-6 bg-black transition-transform duration-200 dark:bg-white ${menuOpen ? 'translate-y-[6px] rotate-45' : ''}`} />
+              <span className={`block h-px w-6 bg-black transition-opacity duration-200 dark:bg-white ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block h-px w-6 bg-black transition-transform duration-200 dark:bg-white ${menuOpen ? '-translate-y-[6px] -rotate-45' : ''}`} />
             </button>
           </div>
         </div>
         {menuOpen && (
-          <div className="absolute left-0 right-0 z-40 border-b border-[color:var(--border)] bg-[var(--background)] shadow-[0_8px_24px_rgba(0,0,0,0.12)] md:hidden">
+          <div className="absolute left-0 right-0 z-40 border-b border-[color:var(--border)] bg-[var(--background)] shadow-[0_8px_24px_rgba(0,0,0,0.12)] xl:hidden">
             <nav className="mx-auto flex max-w-7xl flex-col px-6 py-4">
-              {editorialNav.map((n) => (
+              {editorialNav.map((item) => (
                 <a
-                  key={n.href}
-                  href={n.href}
+                  key={item.href}
+                  href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="border-b border-black/10 py-4 text-sm uppercase tracking-[0.25em] text-black/70 hover:text-black dark:border-white/10 dark:text-white/70 dark:hover:text-white"
+                  className="border-b border-black/10 py-3 text-sm uppercase tracking-[0.25em] text-black/70 hover:text-black dark:border-white/10 dark:text-white/70 dark:hover:text-white"
                 >
-                  {n.label}
+                  {item.label}
                 </a>
               ))}
-              <Button
-                onClick={() => { setMenuOpen(false); setModalOpen(true); }}
-                variant="outline"
-                className="mt-4 w-full"
-              >
-                Book a Call
+              <Button onClick={openEnquiry} variant="outline" className={`mt-4 w-full ${mobilePrimaryCtaClass}`}>
+                {primaryCta}
               </Button>
             </nav>
           </div>
         )}
       </header>
 
-      <section className="relative h-[calc(100svh-5rem)] min-h-[480px] overflow-hidden border-b border-black/10 dark:border-white/10">
-        <video
-          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-          src="/media/hero-reel.mp4"
-          poster="/media/hero-poster.jpg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        />
-        <img
-          src="/media/hero-poster.jpg"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 hidden h-full w-full object-cover motion-reduce:block"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-black/10" />
-        <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-14 text-[#f5f1e8] md:px-10 md:pb-20">
-          <h1 className="font-display display-safe text-5xl font-semibold md:text-8xl">
-            Films that<br />
-            <em className="font-normal not-italic">linger.</em>
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-[#f5f1e8]/80 md:text-lg">
-            An editorial studio for small businesses. We make video the way old magazines made stories — with care for the line, the frame, and the reader.
-          </p>
-          <div className="mt-8 flex items-center gap-6">
-            <a href="#contact" className="bg-[#f5f1e8] px-7 py-3 text-xs uppercase tracking-[0.3em] text-[#1a1814] hover:bg-[#f5f1e8]/85">
-              Begin a project
-            </a>
-            <a href="#services" className="border-b border-[#c9b89a] pb-1 text-xs uppercase tracking-[0.3em] text-[#f5f1e8]">
-              Browse the disciplines
-            </a>
+      <main>
+        <section className="relative h-[calc(100svh-4.5rem)] min-h-[580px] overflow-hidden border-b border-black/10 dark:border-white/10">
+          <video
+            className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+            src="/media/hero-reel.mp4"
+            poster="/media/hero-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          />
+          <img
+            src="/media/hero-poster.jpg"
+            alt=""
+            aria-hidden="true"
+            width={640}
+            height={360}
+            className="absolute inset-0 hidden h-full w-full object-cover motion-reduce:block"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.5) 48%, rgba(0, 0, 0, 0.12) 78%), linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, transparent 72%)',
+            }}
+          />
+          <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-10 text-[#f5f1e8] sm:px-6 sm:pb-14 md:px-10 md:pb-20">
+            <div>
+              <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#f5f1e8]/70 sm:text-sm">
+                Anna Wilson Creations
+              </p>
+              <h1 className="font-display display-safe max-w-5xl text-[2.5rem] font-semibold min-[340px]:text-5xl sm:text-6xl md:text-7xl xl:text-8xl">
+                Visual and<br />
+                <em className="font-normal not-italic">Marketing Storytelling</em>
+              </h1>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#f5f1e8]/85 sm:mt-6 md:text-lg">
+                Helping small businesses tell better stories through short form video and marketing.
+              </p>
+            </div>
+            <Button
+              onClick={openEnquiry}
+              size="lg"
+              className={`inset-frame-button mt-7 w-full sm:w-fit ${mobilePrimaryCtaClass}`}
+            >
+              {primaryCta}
+            </Button>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="about" className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
-        <div className="mx-auto grid max-w-7xl grid-cols-12 gap-8 px-6 py-20 md:px-10 md:py-28">
-          <aside className="col-span-12 md:col-span-5">
-            <img
-              src="/media/using-laptop.jpg"
-              alt="Anna Wilson working on a laptop"
-              width={1066}
-              height={1600}
-              loading="lazy"
-              className="aspect-[4/5] w-full object-cover"
-            />
-          </aside>
-          <div className="col-span-12 md:col-span-7">
-            <h2 className="font-display display-safe mt-4 text-5xl font-semibold md:text-7xl">
-              About<br />
-              <em className="italic font-normal">Anna Wilson.</em>
-            </h2>
-            <div className="mt-8 space-y-5 text-lg leading-relaxed text-black/80 dark:text-white/80 md:text-xl">
-              <p>
-                <span className="text-3xl float-left mr-2 leading-none">I</span>
-                started this studio after a decade of making films inside agencies that
-                kept asking for louder, faster, glossier. I wanted the opposite —
-                quieter work, made with patience, that still moved the needle.
-              </p>
-              <p>
-                Today I work with a small bench of trusted creators and editors,
-                directing every project from first call to final frame. Sourdough
-                bakeries, indie roasters, skincare founders, denim shops — the
-                brands I love are the ones built by hand.
-              </p>
-              <p>
-                If you are a small business with a story worth telling slowly,
-                I would like to hear from you.
+        <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
+          <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:px-10 md:py-24">
+            <div className="grid gap-5 md:grid-cols-12 md:items-end">
+              <div className="md:col-span-7">
+                <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Portfolio</p>
+                <h2 id="portfolio" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
+                  Stories made<br />
+                  <em className="font-normal italic">to be remembered.</em>
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-relaxed text-black/70 dark:text-white/70 md:col-span-5">
+                A showreel of visual stories created with warmth, clarity and a strong sense of place.
               </p>
             </div>
 
-            <p className="mt-10 text-2xl italic text-black/70 dark:text-white/70 md:text-3xl">
-              — Anna Wilson, Founder &amp; Director
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="services" className="border-b border-black/10 dark:border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <div className="grid grid-cols-12 gap-6">
-            <h2 className="font-display display-safe col-span-12 text-4xl font-semibold md:col-span-4 md:text-5xl">The Disciplines</h2>
-            <p className="col-span-12 text-sm leading-relaxed text-black/65 dark:text-white/65 md:col-span-7 md:col-start-6">
-              Six practices, each tuned for a different cadence of attention. Choose one or commission the suite.
-            </p>
-          </div>
-          <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
-            {services.map((s) => (
-              <article key={s.n} className="border-t border-black/15 pt-5 dark:border-white/15">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs uppercase tracking-[0.3em] text-black/50 dark:text-white/50">{s.n}</span>
-                  <span className="text-xs italic text-black/40 dark:text-white/40">— per the brief</span>
+            <figure className="mt-10 md:mt-14">
+              <video
+                className="aspect-video w-full bg-black object-cover"
+                src="/media/hero-reel.mp4"
+                poster="/media/hero-poster.jpg"
+                controls
+                muted
+                playsInline
+                preload="metadata"
+                aria-label="Anna Wilson Creations showreel"
+              />
+              <figcaption className="grid gap-3 border-t border-black/15 pt-4 dark:border-white/15 sm:grid-cols-2 sm:items-start">
+                <div>
+                  <span className="text-xs uppercase tracking-[0.3em] text-black/50 dark:text-white/50">Showreel 01</span>
+                  <h3 className="font-display display-safe mt-1 text-2xl font-semibold">Short-form storytelling</h3>
                 </div>
-                <h3 className="font-display display-safe mt-3 text-2xl font-semibold">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-black/65 dark:text-white/65">{s.desc}</p>
-              </article>
-            ))}
+                <p className="text-sm leading-relaxed text-black/65 dark:text-white/65 sm:text-right">
+                  Direction, filming and editing for people-led brands and independent businesses.
+                </p>
+              </figcaption>
+            </figure>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <p className="text-xs uppercase tracking-[0.4em] text-black/60 dark:text-white/60">From the masthead</p>
-          <h2 className="font-display display-safe mt-3 text-4xl font-semibold md:text-6xl">By the numbers.</h2>
-          <div className="mt-10 grid grid-cols-2 gap-y-10 md:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="border-l border-black/20 pl-5 dark:border-white/20">
-                <div className="font-display display-safe text-5xl font-semibold md:text-6xl">{s.value}</div>
-                <div className="mt-2 text-[11px] uppercase tracking-[0.2em] text-black/55 dark:text-white/55">{s.label}</div>
+        <section className="border-b border-black/10 dark:border-white/10">
+          <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-6 md:grid-cols-12 md:px-10 md:py-24">
+            <div className="md:col-span-5">
+              <img
+                src="/media/portrait-bokah-flowers.jpg"
+                alt="Anna Wilson"
+                width={768}
+                height={1152}
+                loading="lazy"
+                className="aspect-[4/5] w-full object-cover"
+              />
+            </div>
+            <div className="self-center md:col-span-6 md:col-start-7">
+              <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">My Story</p>
+              <h2 id="story" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
+                Personal work,<br />
+                <em className="font-normal italic">made with purpose.</em>
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-black/75 dark:text-white/75">
+                I started Anna Wilson Creations after a decade of making films inside agencies. I wanted to offer small businesses thoughtful creative work without the layers of a large production company.
+              </p>
+              <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
+                Today, I direct every project and bring in a small group of trusted specialists only when the work calls for it.
+              </p>
+              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">— Anna Wilson</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
+          <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:px-10 md:py-24">
+            <div className="grid gap-5 md:grid-cols-12">
+              <div className="md:col-span-6">
+                <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Services</p>
+                <h2 id="services" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
+                  Four ways<br />
+                  <em className="font-normal italic">we can work together.</em>
+                </h2>
               </div>
-            ))}
+              <p className="max-w-xl text-base leading-relaxed text-black/70 dark:text-white/70 md:col-span-5 md:col-start-8 md:self-end">
+                Start with the support your business needs now. Each service can stand alone or become part of a wider project.
+              </p>
+            </div>
+            <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 md:mt-14">
+              {services.map((service) => (
+                <article key={service.n} className="border-t border-black/20 pt-5 dark:border-white/20">
+                  <span className="text-xs uppercase tracking-[0.3em] text-black/45 dark:text-white/45">{service.n}</span>
+                  <h3 className="font-display display-safe mt-3 max-w-lg text-2xl font-semibold sm:text-3xl">{service.title}</h3>
+                  <p className="mt-3 max-w-xl text-sm leading-relaxed text-black/65 dark:text-white/65">{service.desc}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="how" className="border-b border-black/10 dark:border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <h2 className="font-display display-safe text-4xl font-semibold md:text-6xl">A working method.</h2>
-          <ol className="mt-12 grid grid-cols-1 gap-px overflow-hidden border border-black/15 dark:border-white/15 md:grid-cols-4">
-            {steps.map((s) => (
-              <li
-                key={s.n}
-                className="bg-[var(--card)] p-7 outline outline-1 -outline-offset-1 outline-[color:var(--border-subtle)]"
-              >
-                <span className="text-3xl italic text-black/30 dark:text-white/30">{s.n}</span>
-                <h3 className="font-display display-safe mt-3 text-xl font-semibold">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/65 dark:text-white/65">{s.desc}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section id="pricing" className="border-b border-black/10 dark:border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <h2 className="font-display display-safe text-4xl font-semibold md:text-6xl">Subscriptions.</h2>
-          <div
-            className="mt-12 grid grid-cols-1 gap-px bg-[color:var(--border-strong)] md:grid-cols-3"
-          >
-            {plans.map((p) => (
-              <div key={p.name} className="bg-[var(--card)] p-8">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="font-display display-safe text-3xl font-semibold">{p.name}</h3>
-                  {p.featured && <span className="text-[10px] uppercase tracking-[0.3em] text-black/50 dark:text-white/50">Recommended</span>}
-                </div>
-                <div className="font-display display-safe mt-4 text-5xl font-semibold">
-                  {p.price}
-                  <span className="text-base text-black/50 dark:text-white/50">{p.cadence}</span>
-                </div>
-                <ul className="mt-6 space-y-2 text-sm text-black/70 dark:text-white/70">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex gap-2">
-                      <span className="text-black/40 dark:text-white/40">—</span>
-                      {f}
-                    </li>
+        <section className="border-b border-black/10 dark:border-white/10">
+          <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:px-10 md:py-24">
+            <div className="grid gap-10 md:grid-cols-12 md:items-start">
+              <div className="md:col-span-5">
+                <img
+                  src="/media/using-laptop.jpg"
+                  alt="Anna Wilson working on a laptop"
+                  width={1066}
+                  height={1600}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full object-cover"
+                />
+              </div>
+              <div className="md:col-span-6 md:col-start-7">
+                <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Experience</p>
+                <h2 id="experience" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
+                  Experience,<br />
+                  <em className="font-normal italic">without the agency layers.</em>
+                </h2>
+                <p className="mt-5 max-w-xl text-base leading-relaxed text-black/70 dark:text-white/70">
+                  Strategic thinking and hands-on creative support, delivered through a simple, collaborative process.
+                </p>
+                <div className="mt-9 space-y-7">
+                  {experience.map((item) => (
+                    <article key={item.label} className="grid grid-cols-[6rem_1fr] gap-4 border-t border-black/15 pt-5 dark:border-white/15 sm:grid-cols-[8rem_1fr]">
+                      <div className="font-display text-3xl font-semibold sm:text-4xl">{item.value}</div>
+                      <div>
+                        <h3 className="text-xs uppercase tracking-[0.25em] text-black/55 dark:text-white/55">{item.label}</h3>
+                        <p className="mt-2 text-sm leading-relaxed text-black/70 dark:text-white/70">{item.desc}</p>
+                      </div>
+                    </article>
                   ))}
-                </ul>
-                <a href="#contact" className="mt-8 inline-block border-b border-black pb-1 text-xs uppercase tracking-[0.3em] dark:border-white">
-                  {p.cta}
-                </a>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="border-b border-black/10 dark:border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <h2 className="font-display display-safe text-4xl font-semibold md:text-6xl">Letters from the field.</h2>
-          <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <figure key={t.name} className="border-t border-black/15 pt-6 dark:border-white/15">
-                <blockquote className="text-2xl italic leading-snug">"{t.quote}"</blockquote>
-                <p className="mt-4 text-sm leading-relaxed text-black/65 dark:text-white/65">{t.body}</p>
-                <figcaption className="mt-6 text-xs uppercase tracking-[0.25em] text-black/55 dark:text-white/55">
-                  {t.name} — {t.business}
-                </figcaption>
-              </figure>
-            ))}
+        <section className="bg-[#1a1814] text-[#f5f1e8]">
+          <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 md:px-10 md:py-28">
+            <p className="text-xs uppercase tracking-[0.4em] text-[#c9b89a]">Contact</p>
+            <h2 id="contact" className="font-display display-safe mt-4 max-w-4xl scroll-mt-8 text-5xl font-semibold sm:text-6xl md:text-7xl">
+              Have a story<br />
+              <em className="font-normal italic">worth telling?</em>
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#f5f1e8]/70">
+              Tell me about your business, what you are working towards and where you would like creative support.
+            </p>
+            <div className="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+              <Button
+                onClick={openEnquiry}
+                size="lg"
+                className={`inset-frame-button w-full sm:w-fit ${mobilePrimaryCtaClass}`}
+              >
+                {primaryCta}
+              </Button>
+              <a
+                href="mailto:hello@annastudio.co"
+                className="border-b border-[#c9b89a] pb-1 text-lg italic text-[#c9b89a]"
+              >
+                hello@annastudio.co
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section id="contact" style={{ background: '#1a1814', color: '#f5f1e8' }}>
-        <div className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
-          <p className="text-xs uppercase tracking-[0.4em] text-[#c9b89a]">Correspondence</p>
-          <h2 className="font-display display-safe mt-4 text-5xl font-semibold md:text-7xl">
-            Write to us.<br />
-            <em className="italic">We write back.</em>
-          </h2>
-          <a href="mailto:hello@annastudio.co" className="mt-10 inline-block border-b border-[#c9b89a] pb-2 text-2xl italic text-[#c9b89a] md:text-3xl">
-            hello@annastudio.co
-          </a>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Dialog open={modalOpen} onOpenChange={handleModalOpenChange}>
-        <DialogContent aria-labelledby="book-call-title">
+        <DialogContent aria-labelledby="enquiry-title">
           <DialogHeader>
-            <DialogDescription>Let's talk</DialogDescription>
-            <DialogTitle id="book-call-title" className="font-display display-safe">Book a Call.</DialogTitle>
+            <DialogDescription>Tell me a little about what you need</DialogDescription>
+            <DialogTitle id="enquiry-title" className="font-display display-safe">
+              {primaryCta}
+            </DialogTitle>
           </DialogHeader>
           {enquirySent ? (
             <div className="mt-8 space-y-6">
               <p className="text-lg leading-relaxed text-black/80 dark:text-white/80">
-                Thank you — we have your details and will be in touch within one working day.
+                Thank you — I have your details and will be in touch within one working day.
               </p>
-              <Button onClick={() => handleModalOpenChange(false)} className="w-full">
+              <Button onClick={() => handleModalOpenChange(false)} className="inset-frame-button w-full">
                 Close
               </Button>
             </div>
           ) : (
             <form
               className="mt-8 space-y-5"
-              /* TODO: wire to a real endpoint (Formspree/API) — currently only shows confirmation */
-              onSubmit={(e) => { e.preventDefault(); setEnquirySent(true); }}
+              onSubmit={handleEnquirySubmit}
             >
+              <div className="absolute -left-[9999px]" aria-hidden="true">
+                <label htmlFor="enquiry-website">Website</label>
+                <input
+                  id="enquiry-website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <div>
                 <label htmlFor="enquiry-name" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Name</label>
                 <input
@@ -317,8 +423,9 @@ export function EditorialTemplate() {
                   name="name"
                   type="text"
                   required
+                  autoComplete="name"
                   className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                  placeholder="Anna Wilson"
+                  placeholder="Your name"
                 />
               </div>
               <div>
@@ -328,8 +435,9 @@ export function EditorialTemplate() {
                   name="email"
                   type="email"
                   required
+                  autoComplete="email"
                   className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                  placeholder="hello@yourbrand.co"
+                  placeholder="hello@yourbusiness.co"
                 />
               </div>
               <div>
@@ -338,15 +446,34 @@ export function EditorialTemplate() {
                   id="enquiry-phone"
                   name="phone"
                   type="tel"
+                  autoComplete="tel"
                   className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
                   placeholder="+44 7700 900000"
                 />
               </div>
+              <div>
+                <label htmlFor="enquiry-message" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Tell me about your business</label>
+                <textarea
+                  id="enquiry-message"
+                  name="message"
+                  required
+                  maxLength={2000}
+                  rows={3}
+                  className="mt-2 w-full resize-y border border-black/30 bg-transparent p-3 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
+                  placeholder="What are you working towards, and where would you like support?"
+                />
+              </div>
+              {enquiryError && (
+                <p role="alert" className="text-sm text-red-700 dark:text-red-300">
+                  {enquiryError}
+                </p>
+              )}
               <Button
                 type="submit"
-                className="mt-4 w-full"
+                disabled={enquirySubmitting}
+                className="inset-frame-button mt-4 w-full"
               >
-                Send Enquiry
+                {enquirySubmitting ? 'Sending…' : 'Send enquiry'}
               </Button>
             </form>
           )}
@@ -354,8 +481,10 @@ export function EditorialTemplate() {
       </Dialog>
 
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-6 text-xs uppercase tracking-[0.25em] text-black/55 dark:text-white/55 md:flex-row md:items-center md:px-10">
-          <span className="font-display display-safe text-base normal-case font-semibold tracking-normal text-black dark:text-white">Anna Wilson Creations — Folio of moving pictures.</span>
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-5 text-xs uppercase tracking-[0.2em] text-black/55 dark:text-white/55 sm:px-6 md:flex-row md:items-center md:px-10">
+          <span className="font-display display-safe text-base font-semibold normal-case tracking-normal text-black dark:text-white">
+            Anna Wilson Creations — Visual and marketing storytelling.
+          </span>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>
