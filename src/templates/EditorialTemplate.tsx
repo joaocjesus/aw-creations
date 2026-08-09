@@ -24,7 +24,7 @@ const enquiryTimeoutMs = 15_000;
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
 const bookingLinkClass =
-  'inset-frame-button inline-flex h-11 items-center justify-center px-4 text-center text-xs font-medium uppercase tracking-[0.25em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]';
+  'inset-frame-button h-11 items-center justify-center px-4 text-center text-xs font-medium uppercase tracking-[0.25em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]';
 
 export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -126,7 +126,7 @@ export function EditorialTemplate() {
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
-          <span className="shrink-0 whitespace-nowrap text-[1.25rem] font-normal leading-none tracking-[0.12em] [font-variant:small-caps] sm:text-[1.5rem] xl:text-[1.75rem] xl:tracking-[0.18em]">
+          <span className="shrink-0 whitespace-nowrap text-lg font-normal leading-none tracking-[0.1em] [font-variant:small-caps] sm:text-[1.5rem] sm:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
             Anna Wilson Creations
           </span>
           <nav className="hidden shrink-0 items-center gap-5 min-[1400px]:flex">
@@ -141,7 +141,9 @@ export function EditorialTemplate() {
             ))}
           </nav>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <ThemeToggle />
+            <div className="hidden min-[480px]:block">
+              <ThemeToggle />
+            </div>
             <a
               href={bookingUrl}
               target="_blank"
@@ -180,7 +182,7 @@ export function EditorialTemplate() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
-                className={`${bookingLinkClass} mt-4 min-h-12 w-full`}
+                className={`${bookingLinkClass} mt-4 inline-flex min-h-12 w-full`}
               >
                 Book a Call
               </a>
