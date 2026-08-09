@@ -32,7 +32,7 @@ export function EditorialTemplate() {
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
-          <span className="shrink-0 whitespace-nowrap text-xl font-normal leading-[1.15] tracking-[0.08em] [font-variant:small-caps] min-[440px]:text-base min-[440px]:leading-none min-[440px]:tracking-[0.05em] sm:text-xl sm:tracking-[0.1em] md:text-[1.5rem] md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
+          <span className="shrink-0 whitespace-nowrap text-xl font-normal leading-[1.15] tracking-[0.08em] [font-variant:small-caps] min-[440px]:text-lg min-[440px]:leading-none min-[440px]:tracking-[0.03em] sm:text-xl sm:tracking-[0.1em] md:text-[1.5rem] md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
             <span className="block min-[440px]:inline">Anna Wilson</span>
             <span className="block min-[440px]:inline min-[440px]:before:content-['\00a0']">Creations</span>
           </span>
