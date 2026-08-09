@@ -197,7 +197,7 @@ function DialogClose({
 }
 
 function DialogHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('space-y-3', className)} {...props} />;
+  return <div className={cn('space-y-3 pr-12', className)} {...props} />;
 }
 
 function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
