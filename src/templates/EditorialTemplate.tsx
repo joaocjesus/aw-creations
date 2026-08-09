@@ -33,8 +33,8 @@ export function EditorialTemplate() {
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
           <span className="shrink-0 whitespace-nowrap text-base font-normal leading-[1.15] tracking-[0.06em] [font-variant:small-caps] sm:text-xl sm:leading-[1.1] sm:tracking-[0.1em] md:text-[1.5rem] md:leading-none md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
-            <span className="block md:inline">Anna Wilson</span>
-            <span className="block md:inline md:before:content-['\00a0']">Creations</span>
+            <span className="block min-[440px]:inline">Anna Wilson</span>
+            <span className="block min-[440px]:inline min-[440px]:before:content-['\00a0']">Creations</span>
           </span>
           <nav className="hidden shrink-0 items-center gap-5 min-[1400px]:flex">
             {editorialNav.map((item) => (
@@ -48,14 +48,14 @@ export function EditorialTemplate() {
             ))}
           </nav>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <div className="hidden min-[480px]:block">
+            <div className="hidden md:block">
               <ThemeToggle />
             </div>
             <a
               href="/contact"
               className={contactLinkClass('inline-flex px-3 tracking-[0.16em] sm:px-4 sm:tracking-[0.25em]')}
             >
-              Contact Us
+              <span className="relative top-px">Contact Us</span>
             </a>
             <button
               onClick={() => setMenuOpen((open) => !open)}
