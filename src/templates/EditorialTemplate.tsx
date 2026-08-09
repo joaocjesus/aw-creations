@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from 'react';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
+import { buttonVariants } from '@/components/ui/button-variants';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -9,6 +10,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { experience, services } from '@/data/site';
+import { cn } from '@/lib/utils';
 
 const editorialNav = [
   { label: 'Portfolio', href: '#portfolio' },
@@ -23,8 +25,8 @@ const bookingUrl = 'https://cal.com/annawcreation';
 const enquiryTimeoutMs = 15_000;
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
-const bookingLinkClass =
-  'inset-frame-button h-11 items-center justify-center px-4 text-center text-xs font-medium uppercase tracking-[0.25em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)]';
+const bookingLinkClass = (className: string) =>
+  cn(buttonVariants({ size: 'sm' }), 'inset-frame-button h-11', className);
 
 export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -148,7 +150,8 @@ export function EditorialTemplate() {
               href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${bookingLinkClass} hidden md:inline-flex`}
+              aria-label="Book a Call (opens in a new tab)"
+              className={bookingLinkClass('hidden md:inline-flex')}
             >
               Book a Call
             </a>
@@ -182,7 +185,8 @@ export function EditorialTemplate() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
-                className={`${bookingLinkClass} mt-4 inline-flex min-h-12 w-full`}
+                aria-label="Book a Call (opens in a new tab)"
+                className={bookingLinkClass('mt-4 min-h-12 w-full')}
               >
                 Book a Call
               </a>
