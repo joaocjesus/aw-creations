@@ -284,7 +284,7 @@ export function EditorialTemplate() {
                 href="/contact"
                 className={primaryLinkClass('w-full sm:w-fit')}
               >
-                {primaryCta}
+                Contact Us
               </a>
               <a
                 href="mailto:hello@annastudio.co"
