@@ -21,6 +21,7 @@ export default function ContactPage() {
     void getCalApi({ namespace: calendarNamespace }).then((cal) => {
       cal('ui', {
         theme: resolvedTheme,
+        colorScheme: resolvedTheme,
         layout: 'month_view',
         hideEventTypeDetails: true,
         styles: {
@@ -29,8 +30,42 @@ export default function ContactPage() {
           },
         },
         cssVarsPerTheme: {
-          light: { 'cal-brand': '#1a1814' },
-          dark: { 'cal-brand': '#f5f1e8' },
+          light: {
+            'cal-brand': '#1a1814',
+            'cal-brand-emphasis': '#302b24',
+            'cal-brand-text': '#f5f1e8',
+            'cal-text': '#49433a',
+            'cal-text-emphasis': '#1a1814',
+            'cal-text-subtle': '#6f685d',
+            'cal-text-muted': '#9a9285',
+            'cal-bg': '#f5f1e8',
+            'cal-bg-emphasis': '#ded5c2',
+            'cal-bg-subtle': '#ece6d6',
+            'cal-bg-muted': '#f1ecdf',
+            'cal-bg-inverted': '#1a1814',
+            'cal-border': '#c9b89a',
+            'cal-border-emphasis': '#9b8a6e',
+            'cal-border-subtle': '#d8cebd',
+            'cal-border-muted': '#e8e1d5',
+            'cal-border-booker': '#c9b89a',
+            'cal-border-booker-width': '1px',
+            radius: '0.25rem',
+          },
+          dark: {
+            'cal-brand': '#f5f1e8',
+            'cal-brand-emphasis': '#ded5c2',
+            'cal-brand-text': '#1a1814',
+            'cal-bg': '#201c16',
+            'cal-bg-emphasis': '#3b352c',
+            'cal-bg-subtle': '#29251f',
+            'cal-bg-muted': '#242018',
+            'cal-border': '#5b5347',
+            'cal-border-subtle': '#403a31',
+            'cal-border-muted': '#302b25',
+            'cal-border-booker': '#5b5347',
+            'cal-border-booker-width': '1px',
+            radius: '0.25rem',
+          },
         },
       });
     }).catch((error: unknown) => {
@@ -165,6 +200,7 @@ export default function ContactPage() {
               config={{
                 layout: 'month_view',
                 theme: resolvedTheme,
+                'ui.color-scheme': resolvedTheme,
                 iframeAttrs: {
                   title: 'Book a call with Anna Wilson',
                 },
