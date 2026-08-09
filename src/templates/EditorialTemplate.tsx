@@ -16,7 +16,7 @@ const primaryCta = 'Let’s talk about your business';
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
 const contactLinkClass = (className: string) =>
-  cn(buttonVariants({ size: 'sm' }), 'inset-frame-button h-11', className);
+  cn(buttonVariants({ size: 'sm' }), 'inset-frame-button h-11 leading-none', className);
 const primaryLinkClass = (className: string) =>
   cn(
     buttonVariants({ size: 'lg' }),
@@ -32,7 +32,7 @@ export function EditorialTemplate() {
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
-          <span className="shrink-0 whitespace-nowrap text-base font-normal leading-[0.9] tracking-[0.06em] [font-variant:small-caps] sm:text-xl sm:tracking-[0.1em] md:text-[1.5rem] md:leading-none md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
+          <span className="shrink-0 whitespace-nowrap text-base font-normal leading-[1.15] tracking-[0.06em] [font-variant:small-caps] sm:text-xl sm:leading-[1.1] sm:tracking-[0.1em] md:text-[1.5rem] md:leading-none md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
             <span className="block md:inline">Anna Wilson</span>
             <span className="block md:inline md:before:content-['\00a0']">Creations</span>
           </span>
