@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { Button } from '@/components/ui/button';
 import {
@@ -26,17 +26,73 @@ export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [enquirySent, setEnquirySent] = useState(false);
+  const [enquirySubmitting, setEnquirySubmitting] = useState(false);
+  const [enquiryError, setEnquiryError] = useState<string | null>(null);
 
   const handleModalOpenChange = (open: boolean) => {
     setModalOpen(open);
     if (!open) {
       setEnquirySent(false);
+      setEnquiryError(null);
     }
   };
 
   const openEnquiry = () => {
     setMenuOpen(false);
     setModalOpen(true);
+  };
+
+  const handleEnquirySubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setEnquirySubmitting(true);
+    setEnquiryError(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      if (!response.ok) {
+        const responseBody = await response.text();
+        let payload: unknown;
+
+        if (responseBody) {
+          try {
+            payload = JSON.parse(responseBody);
+          } catch {
+            console.error('Contact endpoint returned a non-JSON error response.');
+          }
+        }
+
+        const message =
+          payload &&
+          typeof payload === 'object' &&
+          'error' in payload &&
+          typeof payload.error === 'string'
+            ? payload.error
+            : response.status === 404
+              ? 'Email sending is unavailable on the local preview. Please try the deployed site.'
+              : 'The enquiry could not be sent. Please try again.';
+        throw new Error(message);
+      }
+
+      form.reset();
+      setEnquirySent(true);
+    } catch (error) {
+      console.error('Contact form submission failed:', error);
+      setEnquiryError(
+        error instanceof Error
+          ? error.message
+          : 'The enquiry could not be sent. Please try again.',
+      );
+    } finally {
+      setEnquirySubmitting(false);
+    }
   };
 
   return (
@@ -332,11 +388,18 @@ export function EditorialTemplate() {
           ) : (
             <form
               className="mt-8 space-y-5"
-              onSubmit={(event) => {
-                event.preventDefault();
-                setEnquirySent(true);
-              }}
+              onSubmit={handleEnquirySubmit}
             >
+              <div className="absolute -left-[9999px]" aria-hidden="true">
+                <label htmlFor="enquiry-website">Website</label>
+                <input
+                  id="enquiry-website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <div>
                 <label htmlFor="enquiry-name" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Name</label>
                 <input
@@ -372,8 +435,29 @@ export function EditorialTemplate() {
                   placeholder="+44 7700 900000"
                 />
               </div>
-              <Button type="submit" className="inset-frame-button mt-4 w-full">
-                Send enquiry
+              <div>
+                <label htmlFor="enquiry-message" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Tell me about your business</label>
+                <textarea
+                  id="enquiry-message"
+                  name="message"
+                  required
+                  maxLength={2000}
+                  rows={3}
+                  className="mt-2 w-full resize-y border border-black/30 bg-transparent p-3 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
+                  placeholder="What are you working towards, and where would you like support?"
+                />
+              </div>
+              {enquiryError && (
+                <p role="alert" className="text-sm text-red-700 dark:text-red-300">
+                  {enquiryError}
+                </p>
+              )}
+              <Button
+                type="submit"
+                disabled={enquirySubmitting}
+                className="inset-frame-button mt-4 w-full"
+              >
+                {enquirySubmitting ? 'Sending…' : 'Send enquiry'}
               </Button>
             </form>
           )}

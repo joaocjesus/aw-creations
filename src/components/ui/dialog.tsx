@@ -157,7 +157,7 @@ function DialogContent({
           aria-modal="true"
           tabIndex={-1}
           className={cn(
-            'relative w-full max-w-md bg-[var(--background)] p-8 text-[var(--foreground)] shadow-2xl outline-none md:p-10',
+            'relative max-h-[calc(100svh-3rem)] w-full max-w-md overflow-y-auto bg-[var(--background)] p-8 text-[var(--foreground)] shadow-2xl outline-none md:p-10',
             className,
           )}
           onClick={(event) => event.stopPropagation()}
