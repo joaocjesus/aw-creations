@@ -122,16 +122,16 @@ export function EditorialTemplate() {
   return (
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
-          <span className="text-[1.25rem] font-normal leading-none tracking-[0.12em] [font-variant:small-caps] sm:text-[1.5rem] xl:text-[1.75rem] xl:tracking-[0.18em]">
+        <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
+          <span className="shrink-0 whitespace-nowrap text-[1.25rem] font-normal leading-none tracking-[0.12em] [font-variant:small-caps] sm:text-[1.5rem] xl:text-[1.75rem] xl:tracking-[0.18em]">
             Anna Wilson Creations
           </span>
-          <nav className="hidden items-center gap-5 xl:flex">
+          <nav className="hidden shrink-0 items-center gap-5 min-[1400px]:flex">
             {editorialNav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="text-xs uppercase tracking-[0.2em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white"
+                className="whitespace-nowrap text-xs uppercase tracking-[0.2em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white"
               >
                 {item.label}
               </a>
@@ -149,7 +149,7 @@ export function EditorialTemplate() {
             </Button>
             <button
               onClick={() => setMenuOpen((open) => !open)}
-              className="flex flex-col gap-[5px] p-2 xl:hidden"
+              className="flex flex-col gap-[5px] p-2 min-[1400px]:hidden"
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
             >
@@ -160,8 +160,8 @@ export function EditorialTemplate() {
           </div>
         </div>
         {menuOpen && (
-          <div className="absolute left-0 right-0 z-40 border-b border-[color:var(--border)] bg-[var(--background)] shadow-[0_8px_24px_rgba(0,0,0,0.12)] xl:hidden">
-            <nav className="mx-auto flex max-w-7xl flex-col px-6 py-4">
+          <div className="absolute left-0 right-0 z-40 border-b border-[color:var(--border)] bg-[var(--background)] shadow-[0_8px_24px_rgba(0,0,0,0.12)] min-[1400px]:hidden">
+            <nav className="mx-auto flex max-w-[100rem] flex-col px-6 py-4">
               {editorialNav.map((item) => (
                 <a
                   key={item.href}
