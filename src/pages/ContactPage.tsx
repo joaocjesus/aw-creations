@@ -23,6 +23,11 @@ export default function ContactPage() {
         theme: resolvedTheme,
         layout: 'month_view',
         hideEventTypeDetails: true,
+        styles: {
+          body: {
+            background: resolvedTheme === 'dark' ? '#201c16' : '#ece6d6',
+          },
+        },
         cssVarsPerTheme: {
           light: { 'cal-brand': '#1a1814' },
           dark: { 'cal-brand': '#f5f1e8' },
