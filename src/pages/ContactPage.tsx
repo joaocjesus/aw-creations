@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { ContactForm } from '@/components/contact/contact-form';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
@@ -11,6 +11,7 @@ const calendarNamespace = 'contact-page';
 
 export default function ContactPage() {
   const { resolvedTheme } = useTheme();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     document.title = 'Contact Anna Wilson Creations';
@@ -42,6 +43,20 @@ export default function ContactPage() {
           >
             Anna Wilson Creations
           </a>
+          <nav className="hidden items-center gap-6 lg:flex">
+            <a
+              href="#email-enquiry"
+              className="whitespace-nowrap text-xs uppercase tracking-[0.2em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white"
+            >
+              Email Enquiry
+            </a>
+            <a
+              href="#book-a-call"
+              className="whitespace-nowrap text-xs uppercase tracking-[0.2em] text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white"
+            >
+              Book a Call
+            </a>
+          </nav>
           <div className="flex items-center gap-3">
             <div className="hidden min-[480px]:block">
               <ThemeToggle />
@@ -52,8 +67,37 @@ export default function ContactPage() {
             >
               Back to home
             </a>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="flex flex-col gap-[5px] p-2 lg:hidden"
+              aria-label="Toggle contact menu"
+              aria-expanded={menuOpen}
+            >
+              <span className={`block h-px w-6 bg-black transition-transform duration-200 dark:bg-white ${menuOpen ? 'translate-y-[6px] rotate-45' : ''}`} />
+              <span className={`block h-px w-6 bg-black transition-opacity duration-200 dark:bg-white ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block h-px w-6 bg-black transition-transform duration-200 dark:bg-white ${menuOpen ? '-translate-y-[6px] -rotate-45' : ''}`} />
+            </button>
           </div>
         </div>
+        {menuOpen && (
+          <nav className="absolute left-0 right-0 border-b border-[color:var(--border)] bg-[var(--background)] px-6 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.12)] lg:hidden">
+            <a
+              href="#email-enquiry"
+              onClick={() => setMenuOpen(false)}
+              className="block border-b border-black/10 py-3 text-sm uppercase tracking-[0.25em] text-black/70 dark:border-white/10 dark:text-white/70"
+            >
+              Email Enquiry
+            </a>
+            <a
+              href="#book-a-call"
+              onClick={() => setMenuOpen(false)}
+              className="block py-3 text-sm uppercase tracking-[0.25em] text-black/70 dark:text-white/70"
+            >
+              Book a Call
+            </a>
+          </nav>
+        )}
       </header>
 
       <main>
@@ -74,7 +118,7 @@ export default function ContactPage() {
           <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-6 md:grid-cols-12 md:px-10 md:py-20">
             <div className="md:col-span-5">
               <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Send an enquiry</p>
-              <h2 className="font-display display-safe mt-3 text-4xl font-semibold sm:text-5xl">
+              <h2 id="email-enquiry" className="font-display display-safe mt-3 scroll-mt-28 text-4xl font-semibold sm:text-5xl">
                 Tell me what<br />
                 <em className="font-normal italic">you are working on.</em>
               </h2>
@@ -93,7 +137,7 @@ export default function ContactPage() {
             <div className="grid gap-8 md:grid-cols-12 md:items-end">
               <div className="md:col-span-7">
                 <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Book a call</p>
-                <h2 className="font-display display-safe mt-3 text-4xl font-semibold sm:text-5xl">
+                <h2 id="book-a-call" className="font-display display-safe mt-3 scroll-mt-28 text-4xl font-semibold sm:text-5xl">
                   Prefer to talk?<br />
                   <em className="font-normal italic">Choose a time.</em>
                 </h2>
