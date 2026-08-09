@@ -103,7 +103,7 @@ export default function ContactPage() {
             </div>
             <a
               href="/"
-              className={cn(buttonVariants({ size: 'sm' }), 'inset-frame-button hidden lg:inline-flex')}
+              className={cn(buttonVariants({ size: 'sm' }), 'inset-frame-button hidden h-11 lg:inline-flex')}
             >
               Back to home
             </a>
