@@ -16,7 +16,7 @@ const primaryCta = 'Let’s talk about your business';
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
 const contactLinkClass = (className: string) =>
-  cn(buttonVariants({ size: 'sm' }), 'inset-frame-button h-11', className);
+  cn(buttonVariants({ size: 'sm' }), 'inset-frame-button h-11 leading-none', className);
 const primaryLinkClass = (className: string) =>
   cn(
     buttonVariants({ size: 'lg' }),
@@ -32,8 +32,9 @@ export function EditorialTemplate() {
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
-          <span className="shrink-0 whitespace-nowrap text-lg font-normal leading-none tracking-[0.1em] [font-variant:small-caps] sm:text-[1.5rem] sm:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
-            Anna Wilson Creations
+          <span className="shrink-0 whitespace-nowrap text-xl font-normal leading-[1.15] tracking-[0.08em] [font-variant:small-caps] min-[440px]:text-lg min-[440px]:leading-none min-[440px]:tracking-[0.03em] sm:text-xl sm:tracking-[0.1em] md:text-[1.5rem] md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
+            <span className="block min-[440px]:inline">Anna Wilson</span>
+            <span className="block min-[440px]:inline min-[440px]:before:content-['\00a0']">Creations</span>
           </span>
           <nav className="hidden shrink-0 items-center gap-5 min-[1400px]:flex">
             {editorialNav.map((item) => (
@@ -47,14 +48,14 @@ export function EditorialTemplate() {
             ))}
           </nav>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <div className="hidden min-[480px]:block">
+            <div className="hidden md:block">
               <ThemeToggle />
             </div>
             <a
               href="/contact"
-              className={contactLinkClass('hidden md:inline-flex')}
+              className={contactLinkClass('inline-flex px-3 tracking-[0.16em] sm:px-4 sm:tracking-[0.25em]')}
             >
-              Contact Us
+              <span className="relative top-px">Contact Us</span>
             </a>
             <button
               onClick={() => setMenuOpen((open) => !open)}
@@ -81,13 +82,6 @@ export function EditorialTemplate() {
                   {item.label}
                 </a>
               ))}
-              <a
-                href="/contact"
-                onClick={() => setMenuOpen(false)}
-                className={contactLinkClass('mt-4 min-h-12 w-full')}
-              >
-                Contact Us
-              </a>
             </nav>
           </div>
         )}
@@ -290,7 +284,7 @@ export function EditorialTemplate() {
                 href="/contact"
                 className={primaryLinkClass('w-full sm:w-fit')}
               >
-                {primaryCta}
+                Contact Us
               </a>
               <a
                 href="mailto:hello@annastudio.co"
