@@ -1,14 +1,6 @@
-import { useRef, useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { buttonVariants } from '@/components/ui/button-variants';
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
 import { experience, services } from '@/data/site';
 import { cn } from '@/lib/utils';
 
@@ -21,108 +13,20 @@ const editorialNav = [
 ];
 
 const primaryCta = 'Let’s talk about your business';
-const bookingUrl = 'https://cal.com/annawcreation';
-const enquiryTimeoutMs = 15_000;
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
-const bookingLinkClass = (className: string) =>
+const contactLinkClass = (className: string) =>
   cn(buttonVariants({ size: 'sm' }), 'inset-frame-button h-11', className);
+const primaryLinkClass = (className: string) =>
+  cn(
+    buttonVariants({ size: 'lg' }),
+    'inset-frame-button',
+    mobilePrimaryCtaClass,
+    className,
+  );
 
 export function EditorialTemplate() {
-  const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [enquirySent, setEnquirySent] = useState(false);
-  const [enquirySubmitting, setEnquirySubmitting] = useState(false);
-  const [enquiryError, setEnquiryError] = useState<string | null>(null);
-  const enquiryRequestRef = useRef<AbortController | null>(null);
-
-  const handleModalOpenChange = (open: boolean) => {
-    setModalOpen(open);
-    if (!open) {
-      enquiryRequestRef.current?.abort();
-      enquiryRequestRef.current = null;
-      setEnquirySent(false);
-      setEnquirySubmitting(false);
-      setEnquiryError(null);
-    }
-  };
-
-  const openEnquiry = () => {
-    setMenuOpen(false);
-    setModalOpen(true);
-  };
-
-  const handleEnquirySubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    enquiryRequestRef.current?.abort();
-
-    const controller = new AbortController();
-    enquiryRequestRef.current = controller;
-    const timeout = window.setTimeout(() => controller.abort(), enquiryTimeoutMs);
-    setEnquirySubmitting(true);
-    setEnquiryError(null);
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(formData)),
-        signal: controller.signal,
-      });
-
-      if (!response.ok) {
-        const responseBody = await response.text();
-        let payload: unknown;
-
-        if (responseBody) {
-          try {
-            payload = JSON.parse(responseBody);
-          } catch {
-            console.error('Contact endpoint returned a non-JSON error response.');
-          }
-        }
-
-        const message =
-          payload &&
-          typeof payload === 'object' &&
-          'error' in payload &&
-          typeof payload.error === 'string'
-            ? payload.error
-            : response.status === 404
-              ? 'Email sending is unavailable on the local preview. Please try the deployed site.'
-              : 'The enquiry could not be sent. Please try again.';
-        throw new Error(message);
-      }
-
-      if (enquiryRequestRef.current === controller) {
-        form.reset();
-        setEnquirySent(true);
-      }
-    } catch (error) {
-      if (enquiryRequestRef.current === controller) {
-        const timedOut = error instanceof DOMException && error.name === 'AbortError';
-        if (!timedOut) {
-          console.error('Contact form submission failed:', error);
-        }
-        setEnquiryError(
-            timedOut
-              ? 'The enquiry took too long to send. Please try again.'
-              : error instanceof Error
-            ? error.message
-            : 'The enquiry could not be sent. Please try again.',
-        );
-      }
-    } finally {
-      window.clearTimeout(timeout);
-      if (enquiryRequestRef.current === controller) {
-        enquiryRequestRef.current = null;
-        setEnquirySubmitting(false);
-      }
-    }
-  };
 
   return (
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -147,13 +51,10 @@ export function EditorialTemplate() {
               <ThemeToggle />
             </div>
             <a
-              href={bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Book a Call (opens in a new tab)"
-              className={bookingLinkClass('hidden md:inline-flex')}
+              href="/contact"
+              className={contactLinkClass('hidden md:inline-flex')}
             >
-              Book a Call
+              Contact Us
             </a>
             <button
               onClick={() => setMenuOpen((open) => !open)}
@@ -181,14 +82,11 @@ export function EditorialTemplate() {
                 </a>
               ))}
               <a
-                href={bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contact"
                 onClick={() => setMenuOpen(false)}
-                aria-label="Book a Call (opens in a new tab)"
-                className={bookingLinkClass('mt-4 min-h-12 w-full')}
+                className={contactLinkClass('mt-4 min-h-12 w-full')}
               >
-                Book a Call
+                Contact Us
               </a>
             </nav>
           </div>
@@ -236,13 +134,12 @@ export function EditorialTemplate() {
                 Helping small businesses tell better stories through short form video and marketing.
               </p>
             </div>
-            <Button
-              onClick={openEnquiry}
-              size="lg"
-              className={`inset-frame-button mt-7 w-full sm:w-fit ${mobilePrimaryCtaClass}`}
+            <a
+              href="/contact"
+              className={primaryLinkClass('mt-7 w-full sm:w-fit')}
             >
               {primaryCta}
-            </Button>
+            </a>
           </div>
         </section>
 
@@ -389,13 +286,12 @@ export function EditorialTemplate() {
               Tell me about your business, what you are working towards and where you would like creative support.
             </p>
             <div className="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-              <Button
-                onClick={openEnquiry}
-                size="lg"
-                className={`inset-frame-button w-full sm:w-fit ${mobilePrimaryCtaClass}`}
+              <a
+                href="/contact"
+                className={primaryLinkClass('w-full sm:w-fit')}
               >
                 {primaryCta}
-              </Button>
+              </a>
               <a
                 href="mailto:hello@annastudio.co"
                 className="border-b border-[#c9b89a] pb-1 text-lg italic text-[#c9b89a]"
@@ -406,102 +302,6 @@ export function EditorialTemplate() {
           </div>
         </section>
       </main>
-
-      <Dialog open={modalOpen} onOpenChange={handleModalOpenChange}>
-        <DialogContent aria-labelledby="enquiry-title">
-          <DialogHeader>
-            <DialogDescription>Tell me a little about what you need</DialogDescription>
-            <DialogTitle id="enquiry-title" className="font-display display-safe">
-              {primaryCta}
-            </DialogTitle>
-          </DialogHeader>
-          {enquirySent ? (
-            <div className="mt-8 space-y-6">
-              <p className="text-lg leading-relaxed text-black/80 dark:text-white/80">
-                Thank you — I have your details and will be in touch within one working day.
-              </p>
-              <Button onClick={() => handleModalOpenChange(false)} className="inset-frame-button w-full">
-                Close
-              </Button>
-            </div>
-          ) : (
-            <form
-              className="mt-8 space-y-5"
-              onSubmit={handleEnquirySubmit}
-            >
-              <div className="absolute -left-[9999px]" aria-hidden="true">
-                <label htmlFor="enquiry-website">Website</label>
-                <input
-                  id="enquiry-website"
-                  name="website"
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-              </div>
-              <div>
-                <label htmlFor="enquiry-name" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Name</label>
-                <input
-                  id="enquiry-name"
-                  name="name"
-                  type="text"
-                  required
-                  autoComplete="name"
-                  className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label htmlFor="enquiry-email" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Email</label>
-                <input
-                  id="enquiry-email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                  placeholder="hello@yourbusiness.co"
-                />
-              </div>
-              <div>
-                <label htmlFor="enquiry-phone" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Phone</label>
-                <input
-                  id="enquiry-phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  className="mt-2 w-full border-b border-black/30 bg-transparent pb-2 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                  placeholder="+44 7700 900000"
-                />
-              </div>
-              <div>
-                <label htmlFor="enquiry-message" className="block text-[10px] uppercase tracking-[0.3em] text-black/55 dark:text-white/55">Tell me about your business</label>
-                <textarea
-                  id="enquiry-message"
-                  name="message"
-                  required
-                  maxLength={2000}
-                  rows={3}
-                  className="mt-2 w-full resize-y border border-black/30 bg-transparent p-3 text-base outline-none focus:border-black dark:border-white/30 dark:focus:border-white"
-                  placeholder="What are you working towards, and where would you like support?"
-                />
-              </div>
-              {enquiryError && (
-                <p role="alert" className="text-sm text-red-700 dark:text-red-300">
-                  {enquiryError}
-                </p>
-              )}
-              <Button
-                type="submit"
-                disabled={enquirySubmitting}
-                className="inset-frame-button mt-4 w-full"
-              >
-                {enquirySubmitting ? 'Sending…' : 'Send enquiry'}
-              </Button>
-            </form>
-          )}
-        </DialogContent>
-      </Dialog>
 
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-5 text-xs uppercase tracking-[0.2em] text-black/55 dark:text-white/55 sm:px-6 md:flex-row md:items-center md:px-10">
