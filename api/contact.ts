@@ -67,21 +67,23 @@ export default async function handler(request: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error('RESEND_API_KEY is not configured.');
+  const from = process.env.RESEND_FROM_EMAIL?.trim();
+  const to = process.env.CONTACT_TO_EMAIL?.trim();
+
+  if (!apiKey || !from || !to) {
+    console.error('Required email delivery environment variables are not configured.');
     return jsonResponse({ error: 'Email delivery is not configured.' }, 500);
   }
 
   const resend = new Resend(apiKey);
-  const from = process.env.RESEND_FROM_EMAIL ?? 'Anna Wilson Creations <onboarding@resend.dev>';
-  const to = process.env.CONTACT_TO_EMAIL ?? 'owner@example.com';
+  const subjectName = name.replace(/[\r\n]+/g, ' ');
 
   try {
     const { error } = await resend.emails.send({
       from,
       to,
       replyTo: email,
-      subject: `New website enquiry from ${name}`,
+      subject: `New website enquiry from ${subjectName}`,
       text: [
         `Name: ${name}`,
         `Email: ${email}`,

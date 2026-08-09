@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { Button } from '@/components/ui/button';
 import {
@@ -28,11 +28,15 @@ export function EditorialTemplate() {
   const [enquirySent, setEnquirySent] = useState(false);
   const [enquirySubmitting, setEnquirySubmitting] = useState(false);
   const [enquiryError, setEnquiryError] = useState<string | null>(null);
+  const enquiryRequestRef = useRef<AbortController | null>(null);
 
   const handleModalOpenChange = (open: boolean) => {
     setModalOpen(open);
     if (!open) {
+      enquiryRequestRef.current?.abort();
+      enquiryRequestRef.current = null;
       setEnquirySent(false);
+      setEnquirySubmitting(false);
       setEnquiryError(null);
     }
   };
@@ -44,6 +48,10 @@ export function EditorialTemplate() {
 
   const handleEnquirySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    enquiryRequestRef.current?.abort();
+
+    const controller = new AbortController();
+    enquiryRequestRef.current = controller;
     setEnquirySubmitting(true);
     setEnquiryError(null);
 
@@ -55,6 +63,7 @@ export function EditorialTemplate() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.fromEntries(formData)),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -81,17 +90,24 @@ export function EditorialTemplate() {
         throw new Error(message);
       }
 
-      form.reset();
-      setEnquirySent(true);
+      if (enquiryRequestRef.current === controller) {
+        form.reset();
+        setEnquirySent(true);
+      }
     } catch (error) {
-      console.error('Contact form submission failed:', error);
-      setEnquiryError(
-        error instanceof Error
-          ? error.message
-          : 'The enquiry could not be sent. Please try again.',
-      );
+      if (enquiryRequestRef.current === controller) {
+        console.error('Contact form submission failed:', error);
+        setEnquiryError(
+          error instanceof Error
+            ? error.message
+            : 'The enquiry could not be sent. Please try again.',
+        );
+      }
     } finally {
-      setEnquirySubmitting(false);
+      if (enquiryRequestRef.current === controller) {
+        enquiryRequestRef.current = null;
+        setEnquirySubmitting(false);
+      }
     }
   };
 
