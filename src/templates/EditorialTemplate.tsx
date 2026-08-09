@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from 'react';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
+import { buttonVariants } from '@/components/ui/button-variants';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -9,6 +10,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { experience, services } from '@/data/site';
+import { cn } from '@/lib/utils';
 
 const editorialNav = [
   { label: 'Portfolio', href: '#portfolio' },
@@ -19,9 +21,12 @@ const editorialNav = [
 ];
 
 const primaryCta = 'Let’s talk about your business';
+const bookingUrl = 'https://cal.com/annawcreation';
 const enquiryTimeoutMs = 15_000;
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
+const bookingLinkClass = (className: string) =>
+  cn(buttonVariants({ size: 'sm' }), 'inset-frame-button h-11', className);
 
 export function EditorialTemplate() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -123,7 +128,7 @@ export function EditorialTemplate() {
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
-          <span className="shrink-0 whitespace-nowrap text-[1.25rem] font-normal leading-none tracking-[0.12em] [font-variant:small-caps] sm:text-[1.5rem] xl:text-[1.75rem] xl:tracking-[0.18em]">
+          <span className="shrink-0 whitespace-nowrap text-lg font-normal leading-none tracking-[0.1em] [font-variant:small-caps] sm:text-[1.5rem] sm:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
             Anna Wilson Creations
           </span>
           <nav className="hidden shrink-0 items-center gap-5 min-[1400px]:flex">
@@ -138,15 +143,18 @@ export function EditorialTemplate() {
             ))}
           </nav>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <ThemeToggle />
-            <Button
-              onClick={openEnquiry}
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex"
+            <div className="hidden min-[480px]:block">
+              <ThemeToggle />
+            </div>
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Book a Call (opens in a new tab)"
+              className={bookingLinkClass('hidden md:inline-flex')}
             >
-              {primaryCta}
-            </Button>
+              Book a Call
+            </a>
             <button
               onClick={() => setMenuOpen((open) => !open)}
               className="flex flex-col gap-[5px] p-2 min-[1400px]:hidden"
@@ -172,9 +180,16 @@ export function EditorialTemplate() {
                   {item.label}
                 </a>
               ))}
-              <Button onClick={openEnquiry} variant="outline" className={`mt-4 w-full ${mobilePrimaryCtaClass}`}>
-                {primaryCta}
-              </Button>
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                aria-label="Book a Call (opens in a new tab)"
+                className={bookingLinkClass('mt-4 min-h-12 w-full')}
+              >
+                Book a Call
+              </a>
             </nav>
           </div>
         )}
