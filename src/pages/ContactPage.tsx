@@ -22,7 +22,7 @@ export default function ContactPage() {
       cal('ui', {
         theme: resolvedTheme,
         layout: 'month_view',
-        hideEventTypeDetails: false,
+        hideEventTypeDetails: true,
         cssVarsPerTheme: {
           light: { 'cal-brand': '#1a1814' },
           dark: { 'cal-brand': '#f5f1e8' },
@@ -63,7 +63,7 @@ export default function ContactPage() {
             </div>
             <a
               href="/"
-              className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'hidden sm:inline-flex')}
+              className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'hidden lg:inline-flex')}
             >
               Back to home
             </a>
@@ -92,9 +92,15 @@ export default function ContactPage() {
             <a
               href="#book-a-call"
               onClick={() => setMenuOpen(false)}
-              className="block py-3 text-sm uppercase tracking-[0.25em] text-black/70 dark:text-white/70"
+              className="block border-b border-black/10 py-3 text-sm uppercase tracking-[0.25em] text-black/70 dark:border-white/10 dark:text-white/70"
             >
               Book a Call
+            </a>
+            <a
+              href="/"
+              className="block py-3 text-sm uppercase tracking-[0.25em] text-black/70 dark:text-white/70"
+            >
+              Back to Home
             </a>
           </nav>
         )}
@@ -146,30 +152,34 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              <div className="md:col-span-4 md:col-start-9">
-                <p className="mt-3 text-sm text-black/60 dark:text-white/60 md:text-right">
-                  Prefer a separate window?{' '}
-                  <a
-                    href={bookingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open Cal.com in a new tab"
-                    className="border-b border-current"
-                  >
-                    Open Cal.com
-                  </a>
-                  .
-                </p>
-              </div>
             </div>
 
             <Cal
               namespace={calendarNamespace}
               calLink="annawcreation"
-              config={{ layout: 'month_view', theme: resolvedTheme }}
-              className="mt-10 min-h-[720px] w-full"
+              config={{
+                layout: 'month_view',
+                theme: resolvedTheme,
+                iframeAttrs: {
+                  title: 'Book a call with Anna Wilson',
+                },
+              }}
+              className="min-h-[720px] w-full"
               style={{ width: '100%', height: '100%', overflow: 'auto' }}
             />
+            <p className="mt-4 text-sm text-black/60 dark:text-white/60 md:text-right">
+              Calendar not loading?{' '}
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Cal.com in a new tab"
+                className="border-b border-current"
+              >
+                Open Cal.com in a new tab
+              </a>
+              .
+            </p>
           </div>
         </section>
       </main>
