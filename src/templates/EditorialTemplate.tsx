@@ -1,8 +1,29 @@
 import { useState } from 'react';
+import { Mail } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { buttonVariants } from '@/components/ui/button-variants';
-import { experience, services } from '@/data/site';
+import { experience, instagram, services } from '@/data/site';
 import { cn } from '@/lib/utils';
+
+function InstagramIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
 
 const editorialNav = [
   { label: 'Portfolio', href: '#portfolio' },
@@ -130,8 +151,11 @@ export function EditorialTemplate() {
                 Visual and<br />
                 <em className="font-normal not-italic">Marketing Storytelling</em>
               </h1>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#f5f1e8]/85 sm:mt-6 md:text-lg">
+              <p className="mt-0 max-w-2xl font-display display-safe text-2xl font-normal italic text-[#f5f1e8]/85 sm:text-3xl md:text-4xl">
                 Clear strategy. Hands-on creativity.
+              </p>
+              <p className="mt-16 max-w-2xl text-base leading-relaxed text-[#f5f1e8]/85 sm:mt-24 md:text-lg">
+                Helping small businesses tell better stories through short form video and marketing.
               </p>
             </div>
             <a
@@ -206,8 +230,21 @@ export function EditorialTemplate() {
               <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
                 Today, I direct every project and bring in a small group of trusted specialists only when the work calls for it.
               </p>
-              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">— Anna Wilson</p>
+              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">- Anna Wilson</p>
             </div>
+          </div>
+        </section>
+
+        <section className="border-b border-black/10 dark:border-white/10">
+          <div className="mx-auto grid max-w-7xl gap-6 px-5 py-16 sm:px-6 md:grid-cols-12 md:px-10 md:py-24">
+            <h2 className="font-display display-safe text-4xl font-semibold sm:text-5xl md:col-span-7 md:text-6xl">
+              Your business has a story.
+              <br />
+              <em className="font-normal italic">Let’s make sure people see it.</em>
+            </h2>
+            <p className="max-w-xl text-lg leading-relaxed text-black/70 dark:text-white/70 md:col-span-5 md:self-end">
+              I help small businesses turn what they do into engaging visual content that builds trust, reaches new audiences and gives people a reason to choose them.
+            </p>
           </div>
         </section>
 
@@ -253,8 +290,8 @@ export function EditorialTemplate() {
               <div className="md:col-span-6 md:col-start-7">
                 <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Experience</p>
                 <h2 id="experience" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
-                  Experience,<br />
-                  <em className="font-normal italic">without the agency layers.</em>
+                  Clear strategy,<br />
+                  <em className="font-normal italic">hands-on creativity.</em>
                 </h2>
                 <p className="mt-5 max-w-xl text-base leading-relaxed text-black/70 dark:text-white/70">
                   Strategic thinking and hands-on creative support, delivered through a simple, collaborative process.
@@ -293,10 +330,21 @@ export function EditorialTemplate() {
                 Contact Us
               </a>
               <a
-                href="mailto:hello@annastudio.co"
-                className="border-b border-[#c9b89a] pb-1 text-lg italic text-[#c9b89a]"
+                href="mailto:anna@awcreations.co.uk"
+                className="inline-flex items-center gap-2 pb-1 text-lg italic text-[#c9b89a]"
               >
-                hello@annastudio.co
+                <Mail size={18} aria-hidden="true" />
+                anna@awcreations.co.uk
+              </a>
+              <a
+                href={instagram.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Instagram ${instagram.handle}`}
+                className="inline-flex items-center gap-2 pb-1 text-lg italic text-[#c9b89a]"
+              >
+                <InstagramIcon size={18} />
+                {instagram.handle}
               </a>
             </div>
           </div>
@@ -306,9 +354,21 @@ export function EditorialTemplate() {
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-5 text-xs uppercase tracking-[0.2em] text-black/55 dark:text-white/55 sm:px-6 md:flex-row md:items-center md:px-10">
           <span className="font-display display-safe text-base font-semibold normal-case tracking-normal text-black dark:text-white">
-            Anna Wilson Creations — Visual and marketing storytelling.
+            Anna Wilson Creations - Visual and marketing storytelling.
           </span>
-          <span>© {new Date().getFullYear()}</span>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <a
+              href={instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram ${instagram.handle}`}
+              className="inline-flex items-center gap-2 hover:text-black dark:hover:text-white"
+            >
+              <InstagramIcon size={16} />
+              {instagram.handle}
+            </a>
+            <span>© {new Date().getFullYear()}</span>
+          </div>
         </div>
       </footer>
     </div>

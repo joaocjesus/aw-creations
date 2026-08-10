@@ -5,6 +5,7 @@ import { ContactForm } from '@/components/contact/contact-form';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { buttonVariants } from '@/components/ui/button-variants';
 import { useTheme } from '@/components/theme/theme-context';
+import { instagram } from '@/data/site';
 import { cn } from '@/lib/utils';
 
 const bookingUrl = 'https://cal.com/annawcreation';
@@ -293,9 +294,19 @@ export default function ContactPage() {
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-5 text-xs uppercase tracking-[0.2em] text-black/55 dark:text-white/55 sm:px-6 md:flex-row md:items-center md:px-10">
           <span className="font-display text-base font-semibold normal-case tracking-normal text-black dark:text-white">
-            Anna Wilson Creations — Visual and marketing storytelling.
+            Anna Wilson Creations - Visual and marketing storytelling.
           </span>
-          <span>© {new Date().getFullYear()}</span>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <a
+              href={instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-black dark:hover:text-white"
+            >
+              Instagram {instagram.handle}
+            </a>
+            <span>© {new Date().getFullYear()}</span>
+          </div>
         </div>
       </footer>
     </div>

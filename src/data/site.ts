@@ -1,8 +1,13 @@
+export const instagram = {
+  handle: '@awcreationsuk',
+  href: 'https://www.instagram.com/awcreationsuk/',
+};
+
 export const services = [
   {
     n: '01',
     title: 'Video creation',
-    desc: 'Short-form videos shaped around your business, audience and personality — from idea to final cut.',
+    desc: 'Short-form videos shaped around your business, audience and personality - from idea to final cut.',
   },
   {
     n: '02',
