@@ -8,71 +8,105 @@ import { useTheme } from '@/components/theme/theme-context';
 import { cn } from '@/lib/utils';
 
 const bookingUrl = 'https://cal.com/annawcreation';
-const calendarNamespace = 'contact-page';
+const calendarThemes = ['light', 'dark'] as const;
+type CalendarTheme = (typeof calendarThemes)[number];
+
+const calendarNamespaces: Record<CalendarTheme, string> = {
+  light: 'contact-page-light',
+  dark: 'contact-page-dark',
+};
+
+const calendarCssVars = {
+  light: {
+    'cal-brand': '#1a1814',
+    'cal-brand-emphasis': '#302b24',
+    'cal-brand-text': '#f5f1e8',
+    'cal-text': '#49433a',
+    'cal-text-emphasis': '#1a1814',
+    'cal-text-subtle': '#6f685d',
+    'cal-text-muted': '#9a9285',
+    'cal-bg': '#f5f1e8',
+    'cal-bg-emphasis': '#ded5c2',
+    'cal-bg-subtle': '#ece6d6',
+    'cal-bg-muted': '#f1ecdf',
+    'cal-bg-inverted': '#1a1814',
+    'cal-border': '#c9b89a',
+    'cal-border-emphasis': '#9b8a6e',
+    'cal-border-subtle': '#d8cebd',
+    'cal-border-muted': '#e8e1d5',
+    'cal-border-booker': '#c9b89a',
+    'cal-border-booker-width': '1px',
+    radius: '0.25rem',
+  },
+  dark: {
+    'cal-brand': '#f5f1e8',
+    'cal-brand-emphasis': '#ded5c2',
+    'cal-brand-text': '#1a1814',
+    'cal-bg': '#201c16',
+    'cal-bg-emphasis': '#3b352c',
+    'cal-bg-subtle': '#29251f',
+    'cal-bg-muted': '#242018',
+    'cal-border': '#5b5347',
+    'cal-border-subtle': '#403a31',
+    'cal-border-muted': '#302b25',
+    'cal-border-booker': '#5b5347',
+    'cal-border-booker-width': '1px',
+    radius: '0.25rem',
+  },
+};
 
 export default function ContactPage() {
   const { resolvedTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [calendarReady, setCalendarReady] = useState<Record<CalendarTheme, boolean>>({
+    light: false,
+    dark: false,
+  });
 
   useEffect(() => {
     document.title = 'Contact Anna Wilson Creations';
   }, []);
 
   useEffect(() => {
-    void getCalApi({ namespace: calendarNamespace }).then((cal) => {
-      cal('ui', {
-        theme: resolvedTheme,
-        colorScheme: resolvedTheme,
-        layout: 'month_view',
-        hideEventTypeDetails: true,
-        styles: {
-          body: {
-            background: resolvedTheme === 'dark' ? '#201c16' : '#ece6d6',
+    let mounted = true;
+    const removeListeners: Array<() => void> = [];
+
+    calendarThemes.forEach((theme) => {
+      void getCalApi({ namespace: calendarNamespaces[theme] }).then((cal) => {
+        if (!mounted) {
+          return;
+        }
+
+        const handleReady = () => {
+          setCalendarReady((current) => (
+            current[theme] ? current : { ...current, [theme]: true }
+          ));
+        };
+
+        cal('on', { action: 'linkReady', callback: handleReady });
+        removeListeners.push(() => cal('off', { action: 'linkReady', callback: handleReady }));
+        cal('ui', {
+          theme,
+          colorScheme: theme,
+          layout: 'month_view',
+          hideEventTypeDetails: true,
+          styles: {
+            body: {
+              background: theme === 'dark' ? '#201c16' : '#ece6d6',
+            },
           },
-        },
-        cssVarsPerTheme: {
-          light: {
-            'cal-brand': '#1a1814',
-            'cal-brand-emphasis': '#302b24',
-            'cal-brand-text': '#f5f1e8',
-            'cal-text': '#49433a',
-            'cal-text-emphasis': '#1a1814',
-            'cal-text-subtle': '#6f685d',
-            'cal-text-muted': '#9a9285',
-            'cal-bg': '#f5f1e8',
-            'cal-bg-emphasis': '#ded5c2',
-            'cal-bg-subtle': '#ece6d6',
-            'cal-bg-muted': '#f1ecdf',
-            'cal-bg-inverted': '#1a1814',
-            'cal-border': '#c9b89a',
-            'cal-border-emphasis': '#9b8a6e',
-            'cal-border-subtle': '#d8cebd',
-            'cal-border-muted': '#e8e1d5',
-            'cal-border-booker': '#c9b89a',
-            'cal-border-booker-width': '1px',
-            radius: '0.25rem',
-          },
-          dark: {
-            'cal-brand': '#f5f1e8',
-            'cal-brand-emphasis': '#ded5c2',
-            'cal-brand-text': '#1a1814',
-            'cal-bg': '#201c16',
-            'cal-bg-emphasis': '#3b352c',
-            'cal-bg-subtle': '#29251f',
-            'cal-bg-muted': '#242018',
-            'cal-border': '#5b5347',
-            'cal-border-subtle': '#403a31',
-            'cal-border-muted': '#302b25',
-            'cal-border-booker': '#5b5347',
-            'cal-border-booker-width': '1px',
-            radius: '0.25rem',
-          },
-        },
+          cssVarsPerTheme: calendarCssVars,
+        });
+      }).catch((error: unknown) => {
+        console.error(`Cal.com ${theme} embed failed to initialize:`, error);
       });
-    }).catch((error: unknown) => {
-      console.error('Cal.com embed failed to initialize:', error);
     });
-  }, [resolvedTheme]);
+
+    return () => {
+      mounted = false;
+      removeListeners.forEach((removeListener) => removeListener());
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -190,21 +224,55 @@ export default function ContactPage() {
 
             </div>
 
-            <Cal
-              key={resolvedTheme}
-              namespace={calendarNamespace}
-              calLink="annawcreation"
-              config={{
-                layout: 'month_view',
-                theme: resolvedTheme,
-                'ui.color-scheme': resolvedTheme,
-                iframeAttrs: {
-                  title: 'Book a call with Anna Wilson',
-                },
-              }}
-              className="min-h-[720px] w-full"
-              style={{ width: '100%', height: '100%', overflow: 'auto' }}
-            />
+            <div
+              className="relative min-h-[720px]"
+              aria-busy={!calendarReady[resolvedTheme]}
+            >
+              {calendarThemes.map((theme) => {
+                const active = theme === resolvedTheme;
+
+                return (
+                  <div
+                    key={theme}
+                    aria-hidden={!active}
+                    className={cn(
+                      'min-h-[720px] w-full',
+                      active
+                        ? 'relative visible'
+                        : 'pointer-events-none invisible absolute inset-0 overflow-hidden',
+                    )}
+                  >
+                    <Cal
+                      namespace={calendarNamespaces[theme]}
+                      calLink="annawcreation"
+                      config={{
+                        layout: 'month_view',
+                        theme,
+                        'ui.color-scheme': theme,
+                        iframeAttrs: {
+                          title: `Book a call with Anna Wilson (${theme} theme)`,
+                        },
+                      }}
+                      className="min-h-[720px] w-full"
+                      style={{ width: '100%', height: '100%', overflow: 'auto' }}
+                    />
+                  </div>
+                );
+              })}
+              {!calendarReady[resolvedTheme] && (
+                <div
+                  className="absolute inset-0 z-10 flex min-h-[720px] items-center justify-center bg-[var(--muted)]"
+                  role="status"
+                >
+                  <div className="text-center">
+                    <span className="mx-auto block size-8 animate-spin rounded-full border border-[color:var(--foreground-muted)] border-t-[var(--foreground)]" />
+                    <span className="mt-4 block text-xs uppercase tracking-[0.3em] text-[color:var(--foreground-muted)]">
+                      Loading availability
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
             <p className="mt-4 text-sm text-black/60 dark:text-white/60 md:text-right">
               Calendar not loading?{' '}
               <a
