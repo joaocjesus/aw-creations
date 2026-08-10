@@ -131,7 +131,7 @@ export function EditorialTemplate() {
                 <em className="font-normal not-italic">Marketing Storytelling</em>
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#f5f1e8]/85 sm:mt-6 md:text-lg">
-                Helping small businesses tell better stories through short form video and marketing.
+                Clear strategy. Hands-on creativity.
               </p>
             </div>
             <a
