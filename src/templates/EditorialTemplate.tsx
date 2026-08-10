@@ -72,6 +72,12 @@ export function EditorialTemplate() {
         {menuOpen && (
           <div className="absolute left-0 right-0 z-40 border-b border-[color:var(--border)] bg-[var(--background)] shadow-[0_8px_24px_rgba(0,0,0,0.12)] min-[1400px]:hidden">
             <nav className="mx-auto flex max-w-[100rem] flex-col px-6 py-4">
+              <div className="flex items-center justify-between border-b border-black/10 py-3 dark:border-white/10 md:hidden">
+                <span className="text-sm uppercase tracking-[0.25em] text-black/70 dark:text-white/70">
+                  Theme
+                </span>
+                <ThemeToggle />
+              </div>
               {editorialNav.map((item) => (
                 <a
                   key={item.href}

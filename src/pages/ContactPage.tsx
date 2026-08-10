@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
+import { House } from 'lucide-react';
 import { ContactForm } from '@/components/contact/contact-form';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { buttonVariants } from '@/components/ui/button-variants';
@@ -76,12 +77,13 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5 sm:px-6 md:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-4 sm:px-6 md:px-10 md:py-5">
           <a
             href="/"
-            className="whitespace-nowrap text-lg font-normal leading-none tracking-[0.1em] [font-variant:small-caps] sm:text-2xl sm:tracking-[0.12em]"
+            className="shrink-0 whitespace-nowrap text-xl font-normal leading-[1.1] tracking-[0.06em] [font-variant:small-caps] sm:text-2xl sm:leading-none sm:tracking-[0.08em] md:tracking-[0.12em]"
           >
-            Anna Wilson Creations
+            <span className="block min-[520px]:inline">Anna Wilson</span>
+            <span className="block min-[520px]:inline min-[520px]:before:content-['\00a0']">Creations</span>
           </a>
           <nav className="hidden items-center gap-6 lg:flex">
             <a
@@ -97,15 +99,15 @@ export default function ContactPage() {
               Book a Call
             </a>
           </nav>
-          <div className="flex items-center gap-3">
-            <div className="hidden min-[480px]:block">
-              <ThemeToggle />
-            </div>
+          <div className="ml-auto flex items-center gap-1 sm:gap-2">
+            <ThemeToggle />
             <a
               href="/"
-              className={cn(buttonVariants({ size: 'sm' }), 'inset-frame-button hidden h-11 lg:inline-flex')}
+              aria-label="Back to home"
+              title="Back to home"
+              className={cn(buttonVariants({ size: 'icon' }), 'inset-frame-button h-11 w-11')}
             >
-              Back to home
+              <House size={16} aria-hidden="true" />
             </a>
             <button
               type="button"
@@ -136,19 +138,13 @@ export default function ContactPage() {
             >
               Book a Call
             </a>
-            <a
-              href="/"
-              className="block py-3 text-sm uppercase tracking-[0.25em] text-black/70 dark:text-white/70"
-            >
-              Back to Home
-            </a>
           </nav>
         )}
       </header>
 
       <main>
         <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
-          <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 md:px-10 md:py-16">
+          <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 md:px-10 md:py-16">
             <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Contact</p>
             <h1 className="font-display display-safe mt-3 max-w-5xl text-5xl font-semibold sm:text-6xl">
               Start a<br />
@@ -195,6 +191,7 @@ export default function ContactPage() {
             </div>
 
             <Cal
+              key={resolvedTheme}
               namespace={calendarNamespace}
               calLink="annawcreation"
               config={{
