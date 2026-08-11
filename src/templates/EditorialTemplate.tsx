@@ -312,14 +312,14 @@ export function EditorialTemplate() {
           </div>
         </section>
 
-        <section className="bg-[#1a1814] text-[#f5f1e8]">
+        <section className="bg-[var(--muted)]">
           <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 md:px-10 md:py-28">
-            <p className="text-xs uppercase tracking-[0.4em] text-[#c9b89a]">Contact</p>
+            <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Contact</p>
             <h2 id="contact" className="font-display display-safe mt-4 max-w-4xl scroll-mt-8 text-5xl font-semibold sm:text-6xl md:text-7xl">
               Have a story<br />
               <em className="font-normal italic">worth telling?</em>
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#f5f1e8]/70">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-black/70 dark:text-white/70">
               Tell me about your business, what you are working towards and where you would like creative support.
             </p>
             <div className="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
@@ -331,7 +331,7 @@ export function EditorialTemplate() {
               </a>
               <a
                 href="mailto:anna@awcreations.co.uk"
-                className="inline-flex items-center gap-2 pb-1 text-lg italic text-[#c9b89a]"
+                className="inline-flex items-center gap-2 pb-1 text-lg italic text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
               >
                 <Mail size={18} aria-hidden="true" />
                 anna@awcreations.co.uk
@@ -341,7 +341,7 @@ export function EditorialTemplate() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Instagram ${instagram.handle}`}
-                className="inline-flex items-center gap-2 pb-1 text-lg italic text-[#c9b89a]"
+                className="inline-flex items-center gap-2 pb-1 text-lg italic text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
               >
                 <InstagramIcon size={18} />
                 {instagram.handle}
