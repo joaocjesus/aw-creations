@@ -65,7 +65,7 @@ export default function ContactPage() {
   });
 
   useEffect(() => {
-    document.title = 'Contact Anna Wilson Creations';
+    document.title = 'Contact AW Creations';
   }, []);
 
   useEffect(() => {
@@ -117,8 +117,7 @@ export default function ContactPage() {
             href="/"
             className="shrink-0 whitespace-nowrap text-xl font-normal leading-[1.1] tracking-[0.06em] [font-variant:small-caps] sm:text-2xl sm:leading-none sm:tracking-[0.08em] md:tracking-[0.12em]"
           >
-            <span className="block min-[520px]:inline">Anna Wilson</span>
-            <span className="block min-[520px]:inline min-[520px]:before:content-['\00a0']">Creations</span>
+            AW Creations
           </a>
           <nav className="hidden items-center gap-6 lg:flex">
             <a
@@ -294,7 +293,7 @@ export default function ContactPage() {
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-5 text-xs uppercase tracking-[0.2em] text-black/55 dark:text-white/55 sm:px-6 md:flex-row md:items-center md:px-10">
           <span className="font-display text-base font-semibold normal-case tracking-normal text-black dark:text-white">
-            Anna Wilson Creations - Visual and marketing storytelling.
+            AW Creations - Visual and marketing storytelling.
           </span>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <a

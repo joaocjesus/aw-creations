@@ -53,9 +53,8 @@ export function EditorialTemplate() {
     <div data-template="editorial" className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)] dark:border-white/10">
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-10 md:py-5">
-          <span className="shrink-0 whitespace-nowrap text-xl font-normal leading-[1.15] tracking-[0.08em] [font-variant:small-caps] min-[440px]:text-lg min-[440px]:leading-none min-[440px]:tracking-[0.03em] sm:text-xl sm:tracking-[0.1em] md:text-[1.5rem] md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
-            <span className="block min-[440px]:inline">Anna Wilson</span>
-            <span className="block min-[440px]:inline min-[440px]:before:content-['\00a0']">Creations</span>
+          <span className="shrink-0 whitespace-nowrap text-base font-normal leading-[1.15] tracking-[0.08em] [font-variant:small-caps] min-[340px]:text-xl min-[440px]:text-lg min-[440px]:leading-none min-[440px]:tracking-[0.03em] sm:text-xl sm:tracking-[0.1em] md:text-[1.5rem] md:tracking-[0.12em] xl:text-[1.75rem] xl:tracking-[0.18em]">
+            AW Creations
           </span>
           <nav className="hidden shrink-0 items-center gap-5 min-[1400px]:flex">
             {editorialNav.map((item) => (
@@ -118,8 +117,8 @@ export function EditorialTemplate() {
         <section className="relative h-[calc(100svh-4.5rem)] min-h-[580px] overflow-hidden border-b border-black/10 dark:border-white/10">
           <video
             className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-            src="/media/hero-reel.mp4"
-            poster="/media/hero-poster.jpg"
+            src="/media/anna-web-hero.mp4"
+            poster="/media/anna-web-hero-poster.jpg"
             autoPlay
             muted
             loop
@@ -128,7 +127,7 @@ export function EditorialTemplate() {
             aria-hidden="true"
           />
           <img
-            src="/media/hero-poster.jpg"
+            src="/media/anna-web-hero-poster.jpg"
             alt=""
             aria-hidden="true"
             width={640}
@@ -144,9 +143,6 @@ export function EditorialTemplate() {
           />
           <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-10 text-[#f5f1e8] sm:px-6 sm:pb-14 md:px-10 md:pb-20">
             <div>
-              <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#f5f1e8]/70 sm:text-sm">
-                Anna Wilson Creations
-              </p>
               <h1 className="font-display display-safe max-w-5xl text-[2.5rem] font-semibold min-[340px]:text-5xl sm:text-6xl md:text-7xl xl:text-8xl">
                 Visual and<br />
                 <em className="font-normal not-italic">Marketing Storytelling</em>
@@ -191,7 +187,7 @@ export function EditorialTemplate() {
                 muted
                 playsInline
                 preload="metadata"
-                aria-label="Anna Wilson Creations showreel"
+                aria-label="AW Creations showreel"
               />
               <figcaption className="grid gap-3 border-t border-black/15 pt-4 dark:border-white/15 sm:grid-cols-2 sm:items-start">
                 <div>
@@ -225,7 +221,7 @@ export function EditorialTemplate() {
                 <em className="font-normal italic">made with purpose.</em>
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-black/75 dark:text-white/75">
-                I started Anna Wilson Creations after a decade of making films inside agencies. I wanted to offer small businesses thoughtful creative work without the layers of a large production company.
+                I started AW Creations after a decade of making films inside agencies. I wanted to offer small businesses thoughtful creative work without the layers of a large production company.
               </p>
               <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
                 Today, I direct every project and bring in a small group of trusted specialists only when the work calls for it.
@@ -354,7 +350,7 @@ export function EditorialTemplate() {
       <footer className="border-t border-black/10 py-8 dark:border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-5 text-xs uppercase tracking-[0.2em] text-black/55 dark:text-white/55 sm:px-6 md:flex-row md:items-center md:px-10">
           <span className="font-display display-safe text-base font-semibold normal-case tracking-normal text-black dark:text-white">
-            Anna Wilson Creations - Visual and marketing storytelling.
+            AW Creations - Visual and marketing storytelling.
           </span>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <a
