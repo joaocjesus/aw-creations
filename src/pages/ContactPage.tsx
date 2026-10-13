@@ -250,7 +250,7 @@ export default function ContactPage() {
                         theme,
                         'ui.color-scheme': theme,
                         iframeAttrs: {
-                          title: `Book a call with Anna Wilson (${theme} theme)`,
+                          title: `Book a call with Anna W (${theme} theme)`,
                         },
                       }}
                       className="min-h-[720px] w-full"
