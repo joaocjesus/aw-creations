@@ -42,7 +42,7 @@ const portfolioGroups = [
     description: 'Short-form stories that bring independent businesses, their people and their work to life.',
     examples: [
       { title: 'Video example 01', placeholder: true },
-      { title: 'Interior video 01', src: '/media/interior-video-01.mp4' },
+      { title: 'Construction company testimonial', src: '/media/interior-video-01.mp4' },
       { title: 'Interior video 02', src: '/media/interior-video-02.mp4' },
       { title: 'Interior video 03', src: '/media/interior-video-03.mp4' },
       { title: 'Interior video 04', src: '/media/interior-video-04.mp4' },
