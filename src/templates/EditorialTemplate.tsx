@@ -33,6 +33,49 @@ const editorialNav = [
   { label: 'Contact', href: '#contact' },
 ];
 
+const portfolioGroups = [
+  {
+    id: 'business-videos',
+    number: '01',
+    eyebrow: 'For small businesses',
+    title: 'Small business storytelling',
+    description: 'Short-form films that bring independent businesses, their people and their work to life.',
+    examples: [
+      { title: 'Interior designer client testimonial', src: '/media/interior-video-05.mp4' },
+      { title: 'Bedroom renovation', src: '/media/interior-video-04.mp4' },
+      { title: 'Living room renovation', src: '/media/interior-video-06.mp4' },
+      { title: 'Construction company testimonial', src: '/media/interior-video-01.mp4' },
+      { title: 'Interior design: bedroom renovation', src: '/media/interior-video-02.mp4' },
+      { title: 'Wardrobe makeover', src: '/media/interior-video-03.mp4' },
+    ],
+  },
+  {
+    id: 'behind-the-scenes',
+    number: '02',
+    eyebrow: 'For the filming industry',
+    title: 'Behind the scenes',
+    description: 'A closer look at the people, craft and moments that happen behind the camera.',
+    examples: [
+      { title: 'Short film BTS 01', src: '/media/bts-video-01.mp4' },
+      { title: 'Short film BTS 02', src: '/media/bts-video-02.mp4' },
+      { title: 'Short film BTS 03', src: '/media/bts-video-03.mp4' },
+    ],
+  },
+  {
+    id: 'lifestyle-social',
+    number: '03',
+    eyebrow: 'Personal work',
+    title: 'Lifestyle & social storytelling',
+    description: 'Personal, everyday moments shaped into warm, engaging videos for social media.',
+    examples: [
+      { title: 'A little motivation', src: '/media/lifestyle-video-01.mp4' },
+      { title: 'Improv in motion', src: '/media/lifestyle-video-02.mov' },
+      { title: 'Family moments', src: '/media/lifestyle-video-03.mp4' },
+      { title: 'Christmas together', src: '/media/lifestyle-video-04.mov' },
+    ],
+  },
+];
+
 const primaryCta = 'Let’s talk about your business';
 const mobilePrimaryCtaClass =
   'h-auto min-h-12 whitespace-normal px-4 py-3 text-center leading-snug tracking-[0.16em] sm:whitespace-nowrap sm:px-7 sm:tracking-[0.25em]';
@@ -169,36 +212,59 @@ export function EditorialTemplate() {
               <div className="md:col-span-7">
                 <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">Portfolio</p>
                 <h2 id="portfolio" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
-                  Stories made<br />
-                  <em className="font-normal italic">to be remembered.</em>
+                  Two sides of<br />
+                  <em className="font-normal italic">the story.</em>
                 </h2>
               </div>
               <p className="max-w-xl text-base leading-relaxed text-black/70 dark:text-white/70 md:col-span-5">
-                A showreel of visual stories created with warmth, clarity and a strong sense of place.
+                From bringing independent businesses to life to capturing the energy behind a production, explore the work I love making.
               </p>
             </div>
 
-            <figure className="mt-10 md:mt-14">
-              <video
-                className="aspect-video w-full bg-black object-cover"
-                src="/media/hero-reel.mp4"
-                poster="/media/hero-poster.jpg"
-                controls
-                muted
-                playsInline
-                preload="metadata"
-                aria-label="AW Creations showreel"
-              />
-              <figcaption className="grid gap-3 border-t border-black/15 pt-4 dark:border-white/15 sm:grid-cols-2 sm:items-start">
-                <div>
-                  <span className="text-xs uppercase tracking-[0.3em] text-black/50 dark:text-white/50">Showreel 01</span>
-                  <h3 className="font-display display-safe mt-1 text-2xl font-semibold">Short-form storytelling</h3>
-                </div>
-                <p className="text-sm leading-relaxed text-black/65 dark:text-white/65 sm:text-right">
-                  Direction, filming and editing for people-led brands and independent businesses.
-                </p>
-              </figcaption>
-            </figure>
+            <div className="mt-10 space-y-16 md:mt-14 md:space-y-20">
+              {portfolioGroups.map((group) => (
+                <section key={group.id} aria-labelledby={`${group.id}-title`}>
+                  <div className="mb-6 flex flex-col gap-2 border-t border-black/15 pt-4 dark:border-white/15 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <span className="text-xs uppercase tracking-[0.3em] text-black/50 dark:text-white/50">{group.number} / {group.eyebrow}</span>
+                      <h3 id={`${group.id}-title`} className="font-display display-safe mt-1 text-3xl font-semibold sm:text-4xl">{group.title}</h3>
+                    </div>
+                    <p className="max-w-xl text-sm leading-relaxed text-black/65 dark:text-white/65">{group.description}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-7 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-4">
+                    {group.examples.map((example) => (
+                      <figure key={example.title} className="min-w-0">
+                        {'placeholder' in example ? (
+                          <div
+                            className="relative flex aspect-[9/16] w-full items-center justify-center overflow-hidden border border-black/10 bg-[#ded7c7] px-2 text-center dark:border-white/10 dark:bg-[#29251f] sm:px-4"
+                            aria-label={`${example.title}, vertical video placeholder`}
+                          >
+                            <div className="absolute inset-3 border border-black/15 dark:border-white/15" />
+                            <div className="relative px-4">
+                              <span className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full border border-current text-xl" aria-hidden="true">+</span>
+                              <span className="block text-[0.55rem] uppercase tracking-[0.16em] text-black/50 dark:text-white/50 sm:text-[0.65rem] sm:tracking-[0.25em]">9:16 / {example.title}</span>
+                              <span className="mt-2 block font-display text-base italic text-black/75 dark:text-white/75 sm:text-xl">Video coming soon</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <video
+                            className="aspect-[9/16] w-full bg-black object-cover"
+                            src={example.src}
+                            poster={'poster' in example && typeof example.poster === 'string' ? example.poster : undefined}
+                            controls
+                            muted
+                            playsInline
+                            preload="metadata"
+                            aria-label={example.title}
+                          />
+                        )}
+                        <figcaption className="break-words pt-2 text-xs font-medium leading-snug text-black/75 dark:text-white/75 sm:pt-3 sm:text-sm">{example.title}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -207,7 +273,7 @@ export function EditorialTemplate() {
             <div className="md:col-span-5">
               <img
                 src="/media/portrait-bokah-flowers.jpg"
-                alt="Anna Wilson"
+                alt="Anna W"
                 width={768}
                 height={1152}
                 loading="lazy"
@@ -226,7 +292,10 @@ export function EditorialTemplate() {
               <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
                 Today, I direct every project and bring in a small group of trusted specialists only when the work calls for it.
               </p>
-              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">- Anna Wilson</p>
+              <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
+                I also spent several years working in the TV and film industry, including appearing as the protagonist in an NFTS graduation project. That first-hand experience gave me a strong understanding of life on set and the collaboration behind every production. I bring that insight to behind-the-scenes filming, capturing the people, craft and atmosphere that make each project.
+              </p>
+              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">- Anna W</p>
             </div>
           </div>
         </section>
@@ -276,7 +345,7 @@ export function EditorialTemplate() {
               <div className="md:col-span-5">
                 <img
                   src="/media/using-laptop.jpg"
-                  alt="Anna Wilson working on a laptop"
+                  alt="Anna W working on a laptop"
                   width={1066}
                   height={1600}
                   loading="lazy"
