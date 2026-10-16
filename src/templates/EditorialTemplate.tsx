@@ -41,11 +41,7 @@ const portfolioGroups = [
     title: 'Videos',
     description: 'Short-form stories that bring independent businesses, their people and their work to life.',
     examples: [
-      {
-        title: 'Small business showreel',
-        src: '/media/hero-reel.mp4',
-        poster: '/media/hero-poster.jpg',
-      },
+      { title: 'Video example 01', placeholder: true },
       { title: 'Interior video 01', src: '/media/interior-video-01.mp4' },
       { title: 'Interior video 02', src: '/media/interior-video-02.mp4' },
       { title: 'Interior video 03', src: '/media/interior-video-03.mp4' },
@@ -62,11 +58,7 @@ const portfolioGroups = [
     title: 'Behind the scenes',
     description: 'A closer look at the people, craft and moments that happen behind the camera.',
     examples: [
-      {
-        title: 'On-set behind the scenes',
-        src: '/media/anna-web-hero.mp4',
-        poster: '/media/anna-web-hero-poster.jpg',
-      },
+      { title: 'BTS example 01', placeholder: true },
       { title: 'Behind-the-scenes video 01', src: '/media/bts-video-01.mp4' },
       { title: 'Behind-the-scenes video 02', src: '/media/bts-video-02.mp4' },
       { title: 'BTS example 04', placeholder: true },
@@ -248,7 +240,7 @@ export function EditorialTemplate() {
                           <video
                             className="aspect-[9/16] w-full bg-black object-cover"
                             src={example.src}
-                            poster={example.poster}
+                            poster={'poster' in example && typeof example.poster === 'string' ? example.poster : undefined}
                             controls
                             muted
                             playsInline
