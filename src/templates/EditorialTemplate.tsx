@@ -68,10 +68,10 @@ const portfolioGroups = [
     title: 'Lifestyle & social storytelling',
     description: 'Personal, everyday moments shaped into warm, engaging videos for social media.',
     examples: [
-      { title: 'A Little Motivation', src: '/media/lifestyle-video-01.mp4' },
-      { title: 'Improv in Motion', src: '/media/lifestyle-video-02.mov' },
-      { title: 'Family Moments', src: '/media/lifestyle-video-03.mp4' },
-      { title: 'Christmas Together', src: '/media/lifestyle-video-04.mov' },
+      { title: 'A little motivation', src: '/media/lifestyle-video-01.mp4' },
+      { title: 'Improv in motion', src: '/media/lifestyle-video-02.mov' },
+      { title: 'Family moments', src: '/media/lifestyle-video-03.mp4' },
+      { title: 'Christmas together', src: '/media/lifestyle-video-04.mov' },
     ],
   },
 ];
