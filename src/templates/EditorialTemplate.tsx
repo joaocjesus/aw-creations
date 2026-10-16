@@ -58,6 +58,7 @@ const portfolioGroups = [
     examples: [
       { title: 'Behind-the-scenes video 01', src: '/media/bts-video-01.mp4' },
       { title: 'Behind-the-scenes video 02', src: '/media/bts-video-02.mp4' },
+      { title: 'BTS for short film', src: '/media/bts-video-03.mp4' },
     ],
   },
   {
