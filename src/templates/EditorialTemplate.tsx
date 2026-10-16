@@ -38,17 +38,15 @@ const portfolioGroups = [
     id: 'business-videos',
     number: '01',
     eyebrow: 'For small businesses',
-    title: 'Videos',
-    description: 'Short-form stories that bring independent businesses, their people and their work to life.',
+    title: 'Small business storytelling',
+    description: 'Short-form films that bring independent businesses, their people and their work to life.',
     examples: [
-      { title: 'Video example 01', placeholder: true },
       { title: 'Construction company testimonial', src: '/media/interior-video-01.mp4' },
       { title: 'Interior design: bedroom renovation', src: '/media/interior-video-02.mp4' },
       { title: 'Wardrobe makeover', src: '/media/interior-video-03.mp4' },
       { title: 'Bedroom renovation', src: '/media/interior-video-04.mp4' },
       { title: 'Interior designer client testimonial', src: '/media/interior-video-05.mp4' },
       { title: 'Living room renovation', src: '/media/interior-video-06.mp4' },
-      { title: 'Video example 08', placeholder: true },
     ],
   },
   {
@@ -60,6 +58,19 @@ const portfolioGroups = [
     examples: [
       { title: 'Behind-the-scenes video 01', src: '/media/bts-video-01.mp4' },
       { title: 'Behind-the-scenes video 02', src: '/media/bts-video-02.mp4' },
+    ],
+  },
+  {
+    id: 'lifestyle-social',
+    number: '03',
+    eyebrow: 'Personal work',
+    title: 'Lifestyle & social storytelling',
+    description: 'Personal, everyday moments shaped into warm, engaging videos for social media.',
+    examples: [
+      { title: 'Lifestyle video 01', placeholder: true },
+      { title: 'Lifestyle video 02', placeholder: true },
+      { title: 'Lifestyle video 03', placeholder: true },
+      { title: 'Lifestyle video 04', placeholder: true },
     ],
   },
 ];
