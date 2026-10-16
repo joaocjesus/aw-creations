@@ -43,11 +43,11 @@ const portfolioGroups = [
     examples: [
       { title: 'Video example 01', placeholder: true },
       { title: 'Construction company testimonial', src: '/media/interior-video-01.mp4' },
-      { title: 'Interior video 02', src: '/media/interior-video-02.mp4' },
-      { title: 'Interior video 03', src: '/media/interior-video-03.mp4' },
-      { title: 'Interior video 04', src: '/media/interior-video-04.mp4' },
-      { title: 'Interior video 05', src: '/media/interior-video-05.mp4' },
-      { title: 'Interior video 06', src: '/media/interior-video-06.mp4' },
+      { title: 'Interior design: bedroom renovation', src: '/media/interior-video-02.mp4' },
+      { title: 'Wardrobe makeover', src: '/media/interior-video-03.mp4' },
+      { title: 'Bedroom renovation', src: '/media/interior-video-04.mp4' },
+      { title: 'Interior designer client testimonial', src: '/media/interior-video-05.mp4' },
+      { title: 'Living room renovation', src: '/media/interior-video-06.mp4' },
       { title: 'Video example 08', placeholder: true },
     ],
   },
@@ -58,10 +58,8 @@ const portfolioGroups = [
     title: 'Behind the scenes',
     description: 'A closer look at the people, craft and moments that happen behind the camera.',
     examples: [
-      { title: 'BTS example 01', placeholder: true },
       { title: 'Behind-the-scenes video 01', src: '/media/bts-video-01.mp4' },
       { title: 'Behind-the-scenes video 02', src: '/media/bts-video-02.mp4' },
-      { title: 'BTS example 04', placeholder: true },
     ],
   },
 ];
