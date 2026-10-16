@@ -56,9 +56,9 @@ const portfolioGroups = [
     title: 'Behind the scenes',
     description: 'A closer look at the people, craft and moments that happen behind the camera.',
     examples: [
-      { title: 'Behind-the-scenes video 01', src: '/media/bts-video-01.mp4' },
-      { title: 'Behind-the-scenes video 02', src: '/media/bts-video-02.mp4' },
-      { title: 'BTS for short film', src: '/media/bts-video-03.mp4' },
+      { title: 'Short film BTS 01', src: '/media/bts-video-01.mp4' },
+      { title: 'Short film BTS 02', src: '/media/bts-video-02.mp4' },
+      { title: 'Short film BTS 03', src: '/media/bts-video-03.mp4' },
     ],
   },
   {
