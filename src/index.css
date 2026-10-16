@@ -24,31 +24,31 @@
 
 @layer base {
   :root {
-    --background: #f5f1e8;
-    --foreground: #1a1814;
-    --foreground-soft: rgba(26, 24, 20, 0.8);
-    --foreground-muted: rgba(26, 24, 20, 0.6);
-    --muted: #ece6d6;
-    --card: #f5f1e8;
-    --border: rgba(26, 24, 20, 0.14);
-    --border-subtle: rgba(26, 24, 20, 0.08);
-    --border-strong: rgba(26, 24, 20, 0.15);
-    --accent: #c9b89a;
-    --ring: rgba(26, 24, 20, 0.45);
+    --background: #f4eee4;
+    --foreground: #33261d;
+    --foreground-soft: rgba(51, 38, 29, 0.8);
+    --foreground-muted: rgba(51, 38, 29, 0.6);
+    --muted: #eae0d3;
+    --card: #f4eee4;
+    --border: rgba(51, 38, 29, 0.14);
+    --border-subtle: rgba(51, 38, 29, 0.08);
+    --border-strong: rgba(51, 38, 29, 0.15);
+    --accent: #b99470;
+    --ring: rgba(51, 38, 29, 0.45);
   }
 
   .dark {
-    --background: #1a1814;
-    --foreground: #f5f1e8;
-    --foreground-soft: rgba(245, 241, 232, 0.8);
-    --foreground-muted: rgba(245, 241, 232, 0.6);
-    --muted: #201c16;
-    --card: #242018;
-    --border: rgba(245, 241, 232, 0.14);
-    --border-subtle: rgba(245, 241, 232, 0.08);
-    --border-strong: rgba(245, 241, 232, 0.15);
-    --accent: #c9b89a;
-    --ring: rgba(245, 241, 232, 0.45);
+    --background: #241d17;
+    --foreground: #f4eee4;
+    --foreground-soft: rgba(244, 238, 228, 0.8);
+    --foreground-muted: rgba(244, 238, 228, 0.6);
+    --muted: #30261f;
+    --card: #362b23;
+    --border: rgba(244, 238, 228, 0.14);
+    --border-subtle: rgba(244, 238, 228, 0.08);
+    --border-strong: rgba(244, 238, 228, 0.15);
+    --accent: #b99470;
+    --ring: rgba(244, 238, 228, 0.45);
   }
 
   html {
@@ -90,32 +90,32 @@
   .inset-frame-button {
     position: relative;
     isolation: isolate;
-    background: #f5f1e8;
-    color: #1a1814;
+    background: #f4eee4;
+    color: #33261d;
   }
 
   .inset-frame-button::before {
     position: absolute;
     inset: 4px;
-    border: 1px solid rgba(26, 24, 20, 0.9);
+    border: 1px solid rgba(51, 38, 29, 0.9);
     content: '';
     pointer-events: none;
   }
 
   .inset-frame-button:hover {
-    background: #ece6d6;
+    background: #eae0d3;
   }
 
   .dark .inset-frame-button {
-    background: #11100e;
-    color: #f5f1e8;
+    background: #171310;
+    color: #f4eee4;
   }
 
   .dark .inset-frame-button::before {
-    border-color: rgba(245, 241, 232, 0.9);
+    border-color: rgba(244, 238, 228, 0.9);
   }
 
   .dark .inset-frame-button:hover {
-    background: #29251f;
+    background: #30261f;
   }
 }
