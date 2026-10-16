@@ -238,6 +238,19 @@ export function EditorialTemplate() {
           </div>
         </section>
 
+        <section className="border-b border-black/10 dark:border-white/10">
+          <div className="mx-auto grid max-w-7xl gap-6 px-5 py-16 sm:px-6 md:grid-cols-12 md:px-10 md:py-24">
+            <h2 className="font-display display-safe text-4xl font-semibold sm:text-5xl md:col-span-7 md:text-6xl">
+              Your business has a story.
+              <br />
+              <em className="font-normal italic">Let’s make sure people see it.</em>
+            </h2>
+            <p className="max-w-xl text-lg leading-relaxed text-black/70 dark:text-white/70 md:col-span-5 md:self-end">
+              I help small businesses turn what they do into engaging visual content that builds trust, reaches new audiences and gives people a reason to choose them.
+            </p>
+          </div>
+        </section>
+
         <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
           <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:px-10 md:py-24">
             <div className="grid gap-5 md:grid-cols-12 md:items-end">
@@ -300,18 +313,6 @@ export function EditorialTemplate() {
           </div>
         </section>
 
-        <section className="border-b border-black/10 dark:border-white/10">
-          <div className="mx-auto grid max-w-7xl gap-6 px-5 py-16 sm:px-6 md:grid-cols-12 md:px-10 md:py-24">
-            <h2 className="font-display display-safe text-4xl font-semibold sm:text-5xl md:col-span-7 md:text-6xl">
-              Your business has a story.
-              <br />
-              <em className="font-normal italic">Let’s make sure people see it.</em>
-            </h2>
-            <p className="max-w-xl text-lg leading-relaxed text-black/70 dark:text-white/70 md:col-span-5 md:self-end">
-              I help small businesses turn what they do into engaging visual content that builds trust, reaches new audiences and gives people a reason to choose them.
-            </p>
-          </div>
-        </section>
 
         <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
           <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:px-10 md:py-24">
