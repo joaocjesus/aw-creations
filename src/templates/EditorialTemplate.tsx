@@ -258,7 +258,6 @@ export function EditorialTemplate() {
                             aria-label={example.title}
                           />
                         )}
-                        <figcaption className="break-words pt-2 text-xs font-medium leading-snug text-black/75 dark:text-white/75 sm:pt-3 sm:text-sm">{example.title}</figcaption>
                       </figure>
                     ))}
                   </div>
