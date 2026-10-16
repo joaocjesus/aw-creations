@@ -233,7 +233,7 @@ export function EditorialTemplate() {
               <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
                 I also spent several years working in the TV and film industry, including appearing as the protagonist in an NFTS graduation project. That first-hand experience gave me a strong understanding of life on set and the collaboration behind every production. I bring that insight to behind-the-scenes filming, capturing the people, craft and atmosphere that make each project.
               </p>
-              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">- Anna W</p>
+              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">- Anna</p>
             </div>
           </div>
         </section>
