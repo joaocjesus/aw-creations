@@ -206,6 +206,38 @@ export function EditorialTemplate() {
           </div>
         </section>
 
+        <section className="border-b border-black/10 dark:border-white/10">
+          <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-6 md:grid-cols-12 md:px-10 md:py-24">
+            <div className="relative aspect-[4/5] w-full md:col-span-5 md:aspect-auto">
+              <img
+                src="/media/portrait-bokah-flowers.jpg"
+                alt="Anna W"
+                width={768}
+                height={1152}
+                loading="lazy"
+                className="h-full w-full object-cover md:absolute md:inset-0"
+              />
+            </div>
+            <div className="md:col-span-6 md:col-start-7">
+              <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">My Story</p>
+              <h2 id="story" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
+                Personal work,<br />
+                <em className="font-normal italic">made with purpose.</em>
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-black/75 dark:text-white/75">
+                I started AW Creations after a decade of making films inside agencies. I wanted to offer small businesses thoughtful creative work without the layers of a large production company.
+              </p>
+              <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
+                Today, I direct every project and bring in a small group of trusted specialists only when the work calls for it.
+              </p>
+              <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
+                I also spent several years working in the TV and film industry, including appearing as the protagonist in an NFTS graduation project. That first-hand experience gave me a strong understanding of life on set and the collaboration behind every production. I bring that insight to behind-the-scenes filming, capturing the people, craft and atmosphere that make each project.
+              </p>
+              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">- Anna W</p>
+            </div>
+          </div>
+        </section>
+
         <section className="border-b border-black/10 bg-[var(--muted)] dark:border-white/10">
           <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:px-10 md:py-24">
             <div className="grid gap-5 md:grid-cols-12 md:items-end">
@@ -264,38 +296,6 @@ export function EditorialTemplate() {
                   </div>
                 </section>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-black/10 dark:border-white/10">
-          <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-6 md:grid-cols-12 md:px-10 md:py-24">
-            <div className="md:col-span-5">
-              <img
-                src="/media/portrait-bokah-flowers.jpg"
-                alt="Anna W"
-                width={768}
-                height={1152}
-                loading="lazy"
-                className="aspect-[4/5] w-full object-cover"
-              />
-            </div>
-            <div className="self-center md:col-span-6 md:col-start-7">
-              <p className="text-xs uppercase tracking-[0.4em] text-black/55 dark:text-white/55">My Story</p>
-              <h2 id="story" className="font-display display-safe mt-3 scroll-mt-8 text-4xl font-semibold sm:text-5xl md:text-6xl">
-                Personal work,<br />
-                <em className="font-normal italic">made with purpose.</em>
-              </h2>
-              <p className="mt-6 text-lg leading-relaxed text-black/75 dark:text-white/75">
-                I started AW Creations after a decade of making films inside agencies. I wanted to offer small businesses thoughtful creative work without the layers of a large production company.
-              </p>
-              <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
-                Today, I direct every project and bring in a small group of trusted specialists only when the work calls for it.
-              </p>
-              <p className="mt-5 text-lg leading-relaxed text-black/75 dark:text-white/75">
-                I also spent several years working in the TV and film industry, including appearing as the protagonist in an NFTS graduation project. That first-hand experience gave me a strong understanding of life on set and the collaboration behind every production. I bring that insight to behind-the-scenes filming, capturing the people, craft and atmosphere that make each project.
-              </p>
-              <p className="mt-8 font-display text-2xl italic text-black/65 dark:text-white/65">- Anna W</p>
             </div>
           </div>
         </section>
