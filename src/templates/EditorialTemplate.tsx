@@ -41,12 +41,36 @@ const portfolioGroups = [
     title: 'Small business storytelling',
     description: 'Short-form films that bring independent businesses, their people and their work to life.',
     examples: [
-      { title: 'Interior designer client testimonial', src: '/media/interior-video-05.mp4' },
-      { title: 'Bedroom renovation', src: '/media/interior-video-04.mp4' },
-      { title: 'Living room renovation', src: '/media/interior-video-06.mp4' },
-      { title: 'Construction company testimonial', src: '/media/interior-video-01.mp4' },
-      { title: 'Interior design: bedroom renovation', src: '/media/interior-video-02.mp4' },
-      { title: 'Wardrobe makeover', src: '/media/interior-video-03.mp4' },
+      {
+        title: 'Interior designer client testimonial',
+        src: '/media/interior-video-05.mp4',
+        poster: '/media/interior-video-05-poster.jpg',
+      },
+      {
+        title: 'Bedroom renovation',
+        src: '/media/interior-video-04.mp4',
+        poster: '/media/interior-video-04-poster.jpg',
+      },
+      {
+        title: 'Living room renovation',
+        src: '/media/interior-video-06.mp4',
+        poster: '/media/interior-video-06-poster.jpg',
+      },
+      {
+        title: 'Construction company testimonial',
+        src: '/media/interior-video-01.mp4',
+        poster: '/media/interior-video-01-poster.jpg',
+      },
+      {
+        title: 'Interior design: bedroom renovation',
+        src: '/media/interior-video-02.mp4',
+        poster: '/media/interior-video-02-poster.jpg',
+      },
+      {
+        title: 'Wardrobe makeover',
+        src: '/media/interior-video-03.mp4',
+        poster: '/media/interior-video-03-poster.jpg',
+      },
     ],
   },
   {
@@ -56,9 +80,21 @@ const portfolioGroups = [
     title: 'Behind the scenes',
     description: 'A closer look at the people, craft and moments that happen behind the camera.',
     examples: [
-      { title: 'Short film BTS 01', src: '/media/bts-video-01.mp4' },
-      { title: 'Short film BTS 02', src: '/media/bts-video-02.mp4' },
-      { title: 'Short film BTS 03', src: '/media/bts-video-03.mp4' },
+      {
+        title: 'Short film BTS 01',
+        src: '/media/bts-video-01.mp4',
+        poster: '/media/bts-video-01-poster.jpg',
+      },
+      {
+        title: 'Short film BTS 02',
+        src: '/media/bts-video-02.mp4',
+        poster: '/media/bts-video-02-poster.jpg',
+      },
+      {
+        title: 'Short film BTS 03',
+        src: '/media/bts-video-03.mp4',
+        poster: '/media/bts-video-03-poster.jpg',
+      },
     ],
   },
   {
@@ -68,10 +104,26 @@ const portfolioGroups = [
     title: 'Lifestyle & social storytelling',
     description: 'Personal, everyday moments shaped into warm, engaging videos for social media.',
     examples: [
-      { title: 'A little motivation', src: '/media/lifestyle-video-01.mp4' },
-      { title: 'Improv in motion', src: '/media/lifestyle-video-02.mov' },
-      { title: 'Family moments', src: '/media/lifestyle-video-03.mp4' },
-      { title: 'Christmas together', src: '/media/lifestyle-video-04.mov' },
+      {
+        title: 'A little motivation',
+        src: '/media/lifestyle-video-01.mp4',
+        poster: '/media/lifestyle-video-01-poster.jpg',
+      },
+      {
+        title: 'Improv in motion',
+        src: '/media/lifestyle-video-02.mov',
+        poster: '/media/lifestyle-video-02-poster.jpg',
+      },
+      {
+        title: 'Family moments',
+        src: '/media/lifestyle-video-03.mp4',
+        poster: '/media/lifestyle-video-03-poster.jpg',
+      },
+      {
+        title: 'Christmas together',
+        src: '/media/lifestyle-video-04.mov',
+        poster: '/media/lifestyle-video-04-poster.jpg',
+      },
     ],
   },
 ];
@@ -295,7 +347,7 @@ export function EditorialTemplate() {
                           <video
                             className="aspect-[9/16] w-full bg-black object-cover"
                             src={example.src}
-                            poster={'poster' in example && typeof example.poster === 'string' ? example.poster : undefined}
+                            poster={example.poster}
                             controls
                             muted
                             playsInline
